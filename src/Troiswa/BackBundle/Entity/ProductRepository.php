@@ -26,9 +26,10 @@ class ProductRepository extends EntityRepository
         //createQueryBuilder fait le select et le from donc pas besoin de les faire et comme ca on peut mette where dans if mais createQuery ne le fait pas
     {
         $query=$this->createQueryBuilder("prod");
-        if ($qty!=null)
-            $query->where("prod.quantity>=:qtyval")
-                 ->setParameter("qtyval",$qty);
+        if ($qty!=null) {
+            $query->where("prod.quantite >= :qtyval")
+                ->setParameter("qtyval", $qty);
+        }
         //dump($qty);
         //die;
         return $query->getQuery()->getResult();

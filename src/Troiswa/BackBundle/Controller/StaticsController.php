@@ -144,6 +144,7 @@ class StaticsController extends Controller
         } ce qui est en cmtaire egal à clui dessus */
 
         $formcontactFeedBack->handleRequest($request);
+
         if ($formcontactFeedBack->isValid())
         {
             // Traitement du formulaire valide
