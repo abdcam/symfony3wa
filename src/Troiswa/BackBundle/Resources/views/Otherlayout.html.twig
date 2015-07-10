@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    {% block stylesheets%}
+    <link rel="stylesheet" href="{{ asset("assets/css/style.css") }}">
+    {% endblock %}
+
+    <link type="test/js" href="{{ asset("assets/js/app.js") }}" >
+
+        <title>{% block title %}Mon super site{% endblock %}</title>
+</head>
+<body>
+<h1>{% block h1 %}Titre de la page{% endblock h1 %}</h1>
+
+    <p>{% block contenu %} du super contenu {% endblock %}</p>
+
+    {% block test %}
+        du contenu
+    {% endblock %}
+
+{#<img src="{{ asset("assets/img/deuxvoiture.jpg")}}">#}
+
+ <img src="{{ asset("assets/img/deuxvoiture.jpg", absolute=true)}}">
+
+</body>
+</html>
+
+
+<!-- Exo sur les blocks
+Depuis le template ci-dessus, faire les questions :
+- Afficher dans la balise title "templating - mon super site"
+- Afficher dans le h1 "Bienvenue sur mon site"
+- Afficher au dessus de la balise p le texte "Ceci est du contenu"
+- Rajouter du contenu à la balise <p> afin de visualiser ceci "du super contenu en plus"
+- Créer un template dans le dossier Statics portant le nom de navigation.html.twig et y
+placer le code suivant :
+<ul>
+  <li></li>
+</ul>
+- Faire un include dans le otherlayout
+Grâce à ceci : {% set menu = "mon super menu" %} faire en sorte d'afficher la phrase
+"mon super menu" dans le li -->

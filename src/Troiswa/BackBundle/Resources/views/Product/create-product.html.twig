@@ -1,0 +1,27 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block h1 %}
+    Produit
+{% endblock %}
+
+{% block fil_ariane %}
+    {{ parent() }}
+    <li class="active">
+        <i class="fa fa-dashboard"></i> Produit
+    </li>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+
+    {{ form(formproduct) }}
+
+{% endblock %}
+
+

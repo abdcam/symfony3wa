@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+        <link type="text/css" href="#">
+        <title> Projet Symfony</title>
+    </head>
+    <body>
+    {# pour faire un lien relatif #}
+   <a href="{{ path("trois_back_equipes") }} " > Page equipe</a>
+    <h1>page static</h1>
+<!-- affichagge avec completname    -->
+    {% set completName = firstname ~ " " ~ lastname %}
+    <p> Mes informations:</p>
+     <ul>
+        <li> {{ firstname }} {{ lastname }}</li>
+         <li>{{ age }} </li>
+         <li>{{ completName }} </li>
+     </ul>
+
+    {% if age>18 %}
+        <p> vous etes majeur  </p>
+    {% else %}
+        <p> vous etes mineur  </p>
+    {% endif %}
+
+    {% if article is defined %}
+        {{ article }}
+    {% endif %}
+
+    <a href="{{ path("trois_back_training",{chaine:"toto"}) }}">toto</a>
+    <a href="{{ path("trois_back_training") }}">titi</a>
+
+ {# inclusion en supprimant l'envoi de toutes les variables #}
+{# include"TroiswaBackBundle:Globals:footercgv.html.twig" only  #}
+
+{# inclusion en envoyant toutes les variables et nameAfter #}
+{# include"TroiswaBackBundle:Globals:footercgv.html.twig" with{"nameAfter": completName }  #}
+
+{# inclusion en supprimant l'envoi de toutes les varaibles sauf nameAfter #}
+{% include"TroiswaBackBundle:Globals:footercgv.html.twig" with{"nameAfter": completName }  only %}
+
+
+
+    </body>
+</html>

@@ -1,0 +1,108 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+{% block title %}
+
+{% endblock %}
+{% block h1 %}
+    Feedback
+{% endblock %}
+{% block fil_ariane %}
+    {{ parent() }}
+    <li class="active">
+        <i class="fa fa-dashboard"></i> Feedback
+    </li>
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{{ asset("assets/css/jquery-ui.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/css/jquery-ui.structure.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/css/jquery-ui.theme.min.css") }}">
+{% endblock %}
+
+
+{% block content %}
+{# {{ form(formcontactFeedback) }}#}
+
+        {# form(formcontact) #}
+        {# {{ form_row(formcontact.first) }} egal à tout ce qui est dans div #}
+        {{ form_start(formcontactFeedback, {attr : {class : 'form-horizontal'} } ) }}
+
+        <div class="form-group">
+            {{ form_label(formcontactFeedback.Prenom,null,{label_attr : {class : "col-sm-2"}}) }}
+            {{ form_errors(formcontactFeedback.Prenom, {attr:{ class:"form-erreur"}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(formcontactFeedback.Prenom, {attr:{ class:"form-control"}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formcontactFeedback.Nom,null,{label_attr : {class : "col-sm-2"}}) }}
+            {{ form_errors(formcontactFeedback.Nom, {attr:{ class:"form-erreur"}}) }}
+
+            <div class="col-sm-10">
+                {{ form_widget(formcontactFeedback.Nom, {attr:{ class:"form-control"}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2">Statut</label>
+            {{ form_errors(formcontactFeedback.statut, {attr:{ class:"form-erreur"}}) }}
+            <div class="col-sm-10">
+
+                <label class="radio-inline ">
+                    {{ form_widget(formcontactFeedback.statut.0) }}
+                    {{ formcontactFeedback.statut.children.0.vars.label }}
+                </label>
+
+                <label class="radio-inline ">
+                    {{ form_widget(formcontactFeedback.statut.1) }}
+                    {{ formcontactFeedback.statut.children.1.vars.label }}
+                </label>
+                <label class="radio-inline ">
+                    {{ form_widget(formcontactFeedback.statut.2) }}
+                    {{ formcontactFeedback.statut.children.2.vars.label }}
+                </label>
+                <label class="radio-inline ">
+                    {{ form_widget(formcontactFeedback.statut.3) }}
+                    {{ formcontactFeedback.statut.children.3.vars.label }}
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formcontactFeedback.email,null,{label_attr : {class : "col-sm-2"}}) }}
+            {{ form_errors(formcontactFeedback.email, {attr:{ class:"form-erreur"}}) }}
+
+            <div class="col-sm-10">
+                {{ form_widget(formcontactFeedback.email, {attr:{ class:"form-control"}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_widget(formcontactFeedback.send,{label:"Envoyer"}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_widget(formcontactFeedback.date_bug,{id:"datepicker", attr: {placeholder : 'jj/mm/aaaa'} }) }}
+        </div>
+
+        {{ form_end(formcontactFeedback) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{asset("assets/js/jquery-ui.min.js")}}"></script>
+
+    <script>
+        $(function() {
+            $( "#datepicker" ).datepicker();
+        });
+    </script>
+
+
+{% endblock %}

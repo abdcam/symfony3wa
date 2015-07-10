@@ -1,0 +1,26 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block h1 %}
+    Edition Prodrouct
+{% endblock %}
+
+{% block fil_ariane %}
+    {{ parent() }}
+    <li class="active">
+        <i class="fa fa-dashboard"></i>Editer produit
+    </li>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+    {{ form(formUdaptProduct) }}
+
+{% endblock %}
+
+

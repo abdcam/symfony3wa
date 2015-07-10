@@ -1,0 +1,14 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+
+{% block content %}
+
+    <h1>Affichage d'un produit</h1>
+    <ul>
+       <li>Titre: {{ tableauProducts.title|default('Titre par défaut') }}</li>
+       <li>description:{{ tableauProducts.description}}</li>
+       <li>Prix:{{ tableauProducts.prix}} Euros</li> </h2>
+
+    </ul>
+
+{% endblock %}

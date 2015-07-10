@@ -1,0 +1,64 @@
+les codeShare:
+bdd:
+http://symfony.com/fr/doc/current/cookbook/doctrine/multiple_entity_managers.html
+
+
+Document Doctrine
+http://www.doctrine-project.org/api/orm/2.2/class-Doctrine.ORM.EntityRepository.html
+
+
+Theme bootstrap admin
+http://startbootstrap.com/template-overviews/sb-admin/
+
+
+console
+
+wap74@wap74-desktop ~/sites/symfony3wa $ php app/console doctrine:generate:form TroiswaBackBundle:Product
+
+Exo
+
+- CRUD des catégories (Create, Read, Update, Delete)
+- Creer une entité Category (utiliser php app/consle doctrine:generate:entity)
+- l'entité aura un titre, une description et une position (1,2,3,4,etc.) permettant de savoir si elle est devant une autre ou pas
+- Mettre à jour votre BDD avec php app/console doctrine:schema:update
+- Crééer les routes suivantes
+- /categories/add          => permettant d'afficher le formulaire d'ajout d'une catégorie
+- /categories permettant   => permettant d'afficher toutes les catégories
+- /categories/update/1 ou /categories/update/2 ou /categories/update/3 etc.   => permettant de mettre à jour une catégorie
+- /categories/delete/1 ou /categories/delete/2 ou /categories/delete/3 etc.   => permettant de supprimer une catégorie
+
+- Valider le formulaire comme ceci :
+- titre > 2 et différent de "categorie"
+- description doit contenir le mot "cette catégorie présente"
+- la position ne doit pas être inférieur à 1 (mais peut être égale à 1)
+
+- N'oubliez pas les messages flashs, le javascript pour le delete, le FormType et de vous amusez
+
+exo 09/07/15
+js datepicker:
+http://xdsoft.net/jqplugins/datetimepicker
+
+site bien à revoir
+http://www.doctrine-project.org/api/orm/2.2/class-Doctrine.ORM.EntityRepository.html
+
+//dddddddddddddddddddddddddddddd
+
+10/07/15
+
+https://github.com/symfony/symfony/issues/14712
+
+
+https://github.com/symfony/symfony/issues/14712
+
+http://symfony.com/blog/new-in-symfony-2-7-choice-form-type-refactorization
+
+exo
+Afficher les produits dont la quantité est inférieur à 5
+// Afficher le nombre de produit dont la quantité est à 0
+// Afficher le nombre de catégorie
+// Afficher le nombre de produit actif
+// Afficher le nombre de produit actif et inactif
+// Afficher les catégories dont la position est supérieur à 2
+
+
+

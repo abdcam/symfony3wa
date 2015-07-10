@@ -1,0 +1,29 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block h1 %}
+    suppression Category
+{% endblock %}
+
+{% block fil_ariane %}
+    {{ parent() }}
+    <li class="active">
+        <i class="fa fa-dashboard"></i>Supprimer category
+    </li>
+
+{% endblock %}
+
+{% block content %}
+
+    Votre categorie a bien été supprimée <br>
+
+    <a class="btn btn-primary">Confirmation de supp</a>
+    <a href="{{ path("trois_back_Product") }} " class="btn btn-primary">Retour cat</a>
+
+    <a onclick="return confirm('Etes-vous sûr de supprimer la categorie?')">confirmation supprimer</a>
+
+{% endblock %}
+
+

@@ -1,0 +1,39 @@
+trois_back_Product:
+  path: /
+  defaults: { _controller:TroiswaBackBundle:Product:Product}
+
+trois_back_Product_info:
+  path: /information/{idprod}
+  defaults: { _controller:TroiswaBackBundle:Product:Product_info}
+  requirements:
+    idCat: \d+
+
+trois_back_product:
+    path: /add
+    defaults: { _controller:TroiswaBackBundle:Product:addproduct}
+
+trois_back_product_editer:
+    path: /editer/{idprod}
+    defaults: { _controller:TroiswaBackBundle:Product:edite }
+    requirements:
+        idCat: \d+
+
+trois_back_product_supprimer:
+    path: /supprimer/{idprod}
+    defaults: { _controller:TroiswaBackBundle:Product:supp }
+    requirements:
+        idCat: \d+
+
+trois_back_product_active:
+    path: /active
+    defaults: { _controller:TroiswaBackBundle:Product:productActive }
+
+trois_back_product_limit:
+    path: /limit
+    defaults: { _controller:TroiswaBackBundle:Product:productLimit }
+
+trois_back_product_ChangeVisible:
+    path: /ChangeVisible/{idprod}/{active}
+    defaults: { _controller:TroiswaBackBundle:Product:productChangeVisib }
+    requirements:
+      idprod: \d+

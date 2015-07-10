@@ -1,0 +1,54 @@
+<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+
+{% set routePath = app.request.attributes.get("_route") %}
+
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+        <li {% if routePath == "trois_back_administration" %}class="active"{% endif %}>
+            <a href="{{ path('trois_back_administration') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+
+        </li>
+
+        {{ render(controller('TroiswaBackBundle:Category:AllCategories')) }}
+
+        <li>
+            <a href="{{ path('trois_back_Product') }}"><i class="fa fa-fw fa-table"></i>Produits</a>
+        </li>
+        <li>
+            <a href="{{ path('trois_back_Category') }}"><i class="fa fa-fw fa-table"></i>category</a>
+        </li>
+
+        <li>
+            <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+        </li>
+        <li>
+            <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+        </li>
+        <li>
+            <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+        </li>
+        <li>
+            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="demo" class="collapse nav navbar-nav in">
+
+                <li>
+                    <a href="{{ path('trois_back_contact') }}"><i class="fa fa-fw fa-bar-chart-o"></i> contact</a>
+                </li>
+                <li>
+                    <a href="{{ path('trois_back_feedback') }}"><i class="fa fa-fw fa-bar-chart-o"></i> feedback</a>
+                </li>
+
+                <li>
+                    <a href="#">Dropdown Item</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+        </li>
+        <li>
+            <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+        </li>
+    </ul>
+</div>
+<!-- /.navbar-collapse -->

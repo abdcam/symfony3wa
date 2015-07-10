@@ -1,0 +1,30 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block h1 %}
+    suppression Prodrouct
+{% endblock %}
+
+{% block fil_ariane %}
+    {{ parent() }}
+    <li class="active">
+        <i class="fa fa-dashboard"></i>Supprimer produit
+    </li>
+
+{% endblock %}
+
+
+{% block content %}
+
+    Votre produit a bien été supprimé <br>
+
+    <a class="btn btn-primary">Confirmation de supp</a>
+    <a href="{{ path("trois_back_Product") }} " class="btn btn-primary">Retour produit</a>
+
+    <a onclick="return confirm('Etes-vous sûr de supprimer le produit?')">confirmation supprimer</a>
+
+{% endblock %}
+
+

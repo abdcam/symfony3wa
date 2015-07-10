@@ -1,0 +1,64 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block h1 %}
+    category
+{% endblock %}
+
+{% block fil_ariane %}
+    {{ parent() }}
+    <li class="active">
+        <i class="fa fa-dashboard"></i> voir les category
+    </li>
+
+{% endblock %}
+
+{% block content %}
+
+       <!-- <h1>page product</h1>-->
+
+    <a href="{{ path("trois_back_Category_add") }} " class="btn btn-primary">Ajouter une categorie</a>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+              <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Titre</th>
+                        <th>description</th>
+                        <th>Action</th>
+                    </tr>
+
+              </thead>
+
+                <tbody>
+                <h1>Toutes les category </h1>
+                {% for uneCat in tableauCategory %}
+                    <tr class="active">
+                        <td>{{ uneCat.id }}</td>
+                        <td>{{  uneCat.title}}</td>
+                        <td>{{ uneCat.description}}</td>
+                        <td>
+                            <a href="{{ path('trois_back_Category_info', {idCat : uneCat.id} ) }}" class="btn btn-info">voir</a>
+                            <a href="{{ path('trois_back_Category_editer',{idCat : uneCat.id}) }}" class="btn btn-success">Edite/Modif</a>
+
+                            <a href="{{ path("trois_back_Category_supprimer", {idCat: uneCat.id} ) }}" class="btn btn-danger">supprimer</a>
+
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset("assets/js/remove.js") }}"></script>
+{% endblock  %}

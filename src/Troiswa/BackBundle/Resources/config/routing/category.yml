@@ -1,0 +1,29 @@
+#/***************************************************
+#/     Les categories
+#/**************************************************
+trois_back_Category:
+  path: /
+  defaults: { _controller:TroiswaBackBundle:Category:category}
+
+trois_back_Category_info:
+    path: /information/{idCat}
+    defaults: { _controller:TroiswaBackBundle:Category:Category_info}
+    requirements:
+      idCat: \d+
+
+trois_back_Category_add:
+    path: /add
+    defaults: { _controller:TroiswaBackBundle:Category:addCategory}
+
+
+trois_back_Category_editer:
+    path: /update/{idCat}
+    defaults: { _controller:TroiswaBackBundle:Category:editeCategory}
+    requirements:
+      idCat: \d+
+
+trois_back_Category_supprimer:
+    path: /supprimer/{idCat}
+    defaults: { _controller:TroiswaBackBundle:Category:supp }
+    requirements:
+        idCat: \d+

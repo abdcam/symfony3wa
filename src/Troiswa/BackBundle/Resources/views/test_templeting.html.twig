@@ -1,0 +1,27 @@
+{% extends "TroiswaBackBundle::Otherlayout.html.twig" %}
+
+{% block title %}
+ template  {{ parent() }}
+{% endblock %}
+
+    {% block h1 %}
+        Mon super site
+    {% endblock h1 %}
+{# ou encore {% block h1 "Mon super site" %}#}
+
+
+{% block contenu %}
+    {{ parent() }}
+    en plus
+{% endblock %}
+
+
+{% block test %}
+    {{ parent() }}
+    <br> modification du block
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("assets/css/main.css") }}">
+{% endblock %}

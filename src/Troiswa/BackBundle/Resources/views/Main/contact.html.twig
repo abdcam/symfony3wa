@@ -1,0 +1,81 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+{#surcharge au sein d'un template#}
+{% form_theme formcontact _self %}
+
+
+{% block title %}
+{% endblock %}
+
+{% block h1 %}
+    Contact
+{% endblock %}
+
+{% block fil_ariane %}
+    {{ parent() }}
+    <li class="active">
+        <i class="fa fa-dashboard"></i> Contact
+    </li>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+
+    {# form(formcontact) #}
+{# {{ form_row(formcontact.first) }} egal à tout ce qui est dans div #}
+    {{ form_start(formcontact, {attr : {class : 'form-horizontal'} } ) }}
+
+    <div class="form-group">
+        {{ form_label(formcontact.first,"Prénom",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formcontact.first, {attr:{ class:"form-erreur"}}) }}
+        <div class="col-sm-10">
+            {{ form_widget(formcontact.first, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formcontact.lastname,"Nom",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formcontact.lastname, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            {{ form_widget(formcontact.lastname, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formcontact.sujet,null,{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formcontact.sujet, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            {{ form_widget(formcontact.sujet, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formcontact.email,null,{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formcontact.email, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            {{ form_widget(formcontact.email, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formcontact.cotenu,null, {label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formcontact.cotenu, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            {{ form_widget(formcontact.cotenu, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_widget(formcontact.button,{label:"Envoyer"}) }}
+    </div>
+
+    {{ form_end(formcontact) }}
+
+{% endblock %}
+
+

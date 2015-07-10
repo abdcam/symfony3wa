@@ -1,0 +1,10 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+{% block content %}
+    <h1>Affichage d'une categorie: </h1>
+    <ul>
+        <li>{{ tableauCategory.title }}</li>
+        <li>{{ tableauCategory.description}}</li>
+        <li>{{tableauCategory.date_created|date("d/m/Y") }}</li>
+    </ul>
+{% endblock %}

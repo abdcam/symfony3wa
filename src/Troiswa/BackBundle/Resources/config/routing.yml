@@ -1,0 +1,29 @@
+trois_back_administration:
+  path: /admin
+  defaults: { _controller:TroiswaBackBundle:Main:index}
+
+trois_back_resource_static:
+  resource: "@TroiswaBackBundle/Resources/config/routing/statics.yml"
+
+trois_back_resource_training:
+  resource: "@TroiswaBackBundle/Resources/config/routing/training.yml"
+
+#faire de prefixe pour toutes les routes
+trois_back_resource_product:
+  resource: "@TroiswaBackBundle/Resources/config/routing/product.yml"
+  prefix: /product
+
+trois_back_resource_category:
+  resource: "@TroiswaBackBundle/Resources/config/routing/category.yml"
+  prefix: /category
+
+
+
+
+
+
+
+
+
+
+
