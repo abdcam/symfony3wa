@@ -18,9 +18,62 @@
 
 {% block content %}
 
+{#{{ form(formproduct) }}#}
 
 
-    {{ form(formproduct) }}
+    {{ form_start(formproduct, {attr : {class : 'form-horizontal'} } ) }}
+
+    <div class="form-group">
+        {{ form_label(formproduct.title,"Titre",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.title, {attr:{ class:"form-erreur"}}) }}
+        <div class="col-sm-10">
+            {{ form_widget(formproduct.title, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formproduct.description,"Description",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.description, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            {{ form_widget(formproduct.description, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formproduct.prix,"prix",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.prix, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            {{ form_widget(formproduct.prix, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+    <div>
+
+        <div class="form-group">
+            {{ form_label(formproduct.quantite,"Quantié",{label_attr : {class : "col-sm-2"}}) }}
+            {{ form_errors(formproduct.quantite, {attr:{ class:"form-erreur"}}) }}
+
+            <div class="col-sm-10">
+                {{ form_widget(formproduct.quantite, {attr:{ class:"form-control"}}) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formproduct.active,"Active",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.active, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            {{ form_widget(formproduct.active, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {# {{ form_widget(formUdaptProduct.button,{label:"Send"}) }}#}
+    </div>
+
+    {{ form_end(formproduct) }}
 
 {% endblock %}
 

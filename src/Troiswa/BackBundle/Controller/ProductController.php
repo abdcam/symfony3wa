@@ -8,21 +8,32 @@ use Symfony\Component\HttpFoundation\Response;
 use Troiswa\BackBundle\Entity\Product;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troiswa\BackBundle\Form\ProductType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProductController extends Controller
+
 {
     public function ProductAction()
     {
         $em=$this->getDoctrine()->getManager();
         $products=$em->getRepository("TroiswaBackBundle:Product")
-            ->findAll();
+                 // ->findAll();
+                ->findAllProductwithCategory();
+
         //dump($products);
         //die();
         return $this->render("TroiswaBackBundle:Product:Product.html.twig", ['tableauProducts' => $products]);
     }
 
-    public function Product_infoAction($idprod)
+    /**
+     * @ParamConverter("oneProduct", options={"mapping":{"idprod":"id"}})
+     */
+    public function Product_infoAction(Product $oneProduct)
     {
+       // var_dump($oneProduct);
+        //dump($oneProduct);
+       // die();
+
         /* $products = [
             1 => [
                 "id" => 1,
@@ -52,9 +63,12 @@ class ProductController extends Controller
                 "date_created" => new \DateTime('now'),
                 "prix" => 410
             ],
-        ]; */
+        ];
 
         //find appliqué que sur les id.
+
+        //apartir d'ici  tout le reste a été remplacer par paramConverter
+        /*
         $em=$this->getDoctrine()->getManager();
         $oneProduct=$em->getRepository("TroiswaBackBundle:Product")
                         ->find($idprod);
@@ -68,14 +82,14 @@ class ProductController extends Controller
 
         //$product=$products[$idprod];
 
-        /*
+
         - Afficher le titre et la description de tous les article
     - Afficher uniquement pour le premier article : Ceci est le premier article (pas sur id)
     - Afficher le nombre d article
     - Afficher pour l article ayant l id 4 un titre par défaut
     - Parcourez de nouveau les articles mais dans l ordre inverse
-    - Parcourez de nouveau les articles mais affichez uniquement l article 2 et 3  */
-
+    - Parcourez de nouveau les articles mais affichez uniquement l article 2 et 3
+        */
         return $this->render("TroiswaBackBundle:Product:Product_info.html.twig", ['tableauProducts' => $oneProduct]);
     }
 
@@ -101,6 +115,8 @@ class ProductController extends Controller
         //dump($product);
         $formproduct=$this->createForm(new ProductType(), $product)
             ->add("send","submit");
+
+
 
 
         $formproduct->handleRequest($request);

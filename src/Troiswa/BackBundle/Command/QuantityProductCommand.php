@@ -19,7 +19,6 @@ class QuantityProductCommand extends ContainerAwareCommand
             ->addOption('message', '-m', InputOption::VALUE_NONE,
                 'Si définie, un petit message apparaitra'
             );
-
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

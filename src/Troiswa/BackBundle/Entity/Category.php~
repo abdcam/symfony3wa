@@ -3,6 +3,7 @@
 namespace Troiswa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Troiswa\BackBundle\Entity\Product;
 
 /**
  * Category
@@ -42,6 +43,11 @@ class Category
      */
     private $position;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Product",mappedBy="categ")
+     *
+     */
+    private $products;
 
     /**
      * Get id
@@ -100,4 +106,32 @@ class Category
     }
 
    
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     * @return Category
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer 
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

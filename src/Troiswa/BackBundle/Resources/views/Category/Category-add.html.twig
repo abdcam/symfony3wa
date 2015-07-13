@@ -18,7 +18,6 @@
 
 {% block content %}
 
-x
     {{ form_start(formcategory, {attr : {class : 'form-horizontal'} } ) }}
 
     <div class="form-group">
@@ -37,6 +36,7 @@ x
             {{ form_widget(formcategory.description, {attr:{ class:"form-control"}}) }}
         </div>
     </div>
+
 
     <div class="form-group">
         {{ form_widget(formcategory.button,{label:"Send"}) }}

@@ -10,7 +10,7 @@ use Troiswa\BackBundle\Entity\Product;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troiswa\BackBundle\Form\CategoryType;
 use Troiswa\BackBundle\Form\ProductType;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class CategoryController extends Controller
 {
     public function CategoryAction()
@@ -26,6 +26,7 @@ class CategoryController extends Controller
 
     public function Category_infoAction($idCat)
     {
+        /*
         $categories = [
             1 => [
                 "id" => 1,
@@ -49,6 +50,7 @@ class CategoryController extends Controller
                 "active" => false
             ],
         ];
+        */
 
         /* exo 030715
          * ATTENTION : LE TABLEAU A ETE MODIFIE
@@ -60,11 +62,16 @@ class CategoryController extends Controller
          *
          */
 
+        /*
        if(!isset($categories[$idCat]))
         {
             throw $this->createNotFoundException("cette categorie n'existe pas");
         }
         $cat=$categories[$idCat];
+        */
+        $em=$this->getDoctrine()->getManager();
+        $cat = $em-> getRepository("TroiswaBackBundle:Category")
+            ->find($idCat);
 
         return $this->render("TroiswaBackBundle:Category:Category_info.html.twig", ['tableauCategory' => $cat]);
     }
@@ -99,15 +106,18 @@ class CategoryController extends Controller
             ]
         );
     }
-    public function editeCategoryAction($idCat,Request $request)
+    /**
+     * @ParamConverter("cat", options={"mapping":{"idCat":"id"}})
+     */
+    public function editeCategoryAction(Category $cat,Request $request)
     {
         $em=$this -> getDoctrine()-> getManager();
-        $cat = $em-> getRepository("TroiswaBackBundle:Category")
+        /*$cat = $em-> getRepository("TroiswaBackBundle:Category")
             ->find($idCat);
         if(empty($cat))
         {
             throw $this->createNotFoundException("Attention");
-        }
+        }    */
 
         $formUdaptCategory=$this->createForm(new CategoryType(), $cat)
             ->add('update', 'submit');
@@ -124,23 +134,29 @@ class CategoryController extends Controller
         }
         return $this->render("TroiswaBackBundle:Category:edite_category.html.twig",
             [
-                "formUdaptProduct"=> $formUdaptCategory->createView()
+                "formUdaptCategory"=> $formUdaptCategory->createView()
             ]);
     }
 
-    public function suppAction($idCat,Request $request)
+    /**
+     * @ParamConverter("category", options={"mapping":{"idCat":"id"}})
+     */
+    public function suppAction(Category $category,Request $request)
     {
         $em=$this -> getDoctrine()-> getManager();
+        /*
         $category = $em-> getRepository("TroiswaBackBundle:Category")
             ->find($idCat);
         if(empty($category))
         {
             throw $this->createNotFoundException("Attention");
         }
+        */
+
         $em->remove($category);
         $em->flush();
 
-        return $this->render("TroiswaBackBundle:Category:supp_product.html.twig");
+        return $this->redirectToRoute('trois_back_Category');
     }
 
     public function AllCategoriesAction()

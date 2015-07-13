@@ -17,7 +17,6 @@
 
 {% block content %}
 
-
     <a href="{{ path("trois_back_product") }} " class="btn btn-primary">Ajouter un produit</a>
     <a href="{{ path("trois_back_product_active") }} " class="btn btn-primary">Liste produit actif</a>
 
@@ -33,6 +32,8 @@
                         <th>id</th>
                         <th>Titre</th>
                         <th>prix</th>
+                        <th>categorie</th>
+                        <th>Etat</th>
                         <th>Action</th>
                     </tr>
               </thead>
@@ -44,19 +45,24 @@
                         <td>{{ unproduct.id }}</td>
                         <td>{{  unproduct.title}}</td>
                         <td>{{ unproduct.prix}}</td>
+                        <td>{% if unproduct.categ is not null %}{
+                                {{ unproduct.categ.title}}
+                            {% else %}pas de categ{% endif %}</td>
                         <td>
+
                             {% if unproduct.active == 0 %}
                                 <a href="{{ path('trois_back_product_ChangeVisible',{idprod : unproduct.id, active : 1}) }}" class="btn btn-success">OFF</a>
                             {% else %}
 
                                 <a href="{{ path('trois_back_product_ChangeVisible',{idprod : unproduct.id, active : 0}) }}" class="btn btn-success"> ON  </a>
                             {% endif %}
-
+                        </td>
+                        <td>
                             <a href="{{ path('trois_back_Product_info', {idprod : unproduct.id} ) }}" class="btn btn-info">voir</a>
 
                             <a href="{{ path('trois_back_product_editer',{idprod : unproduct.id}) }}" class="btn btn-success">Edite/Modif</a>
 
-                           <!-- <a href="{{ path("trois_back_product_supprimer", {idprod: unproduct.id} ) }}" class="btn btn-danger" onclick="return confirm('Etes-vous sûr de supprimer le produit?')">supprimer</a> -->
+                           <!-- <a href=" {#{{ path("trois_back_product_supprimer", {idprod: unproduct.id} ) }} #}" class="btn btn-danger" onclick="return confirm('Etes-vous sûr de supprimer le produit?')">supprimer</a> -->
 
                             <a href="{{ path("trois_back_product_supprimer", {idprod: unproduct.id} ) }}" class="btn btn-danger">supprimer</a>
 

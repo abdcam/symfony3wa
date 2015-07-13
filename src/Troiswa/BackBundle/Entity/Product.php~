@@ -3,11 +3,13 @@
 namespace Troiswa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Product
  *
- * @ORM\Table()
+ * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\ProductRepository")
  */
 class Product
@@ -25,6 +27,12 @@ class Product
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = "100",
+     *      maxMessage = "Le titre ne peut pas être plus long que {{ limit }} caractères"
+     * )
+     *
      */
     private $title;
 
@@ -32,6 +40,11 @@ class Product
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
+     * @Assert\NotBlank()
+     *@Assert\Length(
+     *      max = "100",
+     *      maxMessage = "Le titre ne peut pas être plus long que {{ limit }} caractères"
+     * )
      */
     private $description;
 
@@ -39,6 +52,11 @@ class Product
      * @var string
      *
      * @ORM\Column(name="prix", type="string", length=255)
+     * @Assert\NotBlank()
+     *  @Assert\Length(
+     *      max = "10",
+     *      maxMessage = "La description ne peut pas être plus long que {{ limit }} caractères"
+     * )
      */
     private $prix;
 
@@ -46,6 +64,11 @@ class Product
      * @var integer
      *
      * @ORM\Column(name="quantite", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     * message="Le prix doit etre supéreur à 0 "
+     *)
      */
     private $quantite;
 
@@ -53,7 +76,269 @@ class Product
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean")
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *     message="La quantité doit etre supéreur à 0"
+     * )
      */
     private $active;
-    
+
+    /**
+     * @Gedmo\Slug(fields={"title"},updatable=true)
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var \DateTime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Troiswa\BackBundle\Entity\Category")
+     * @ORM\JoinColumn(name="id_categorie",referencedColumnName="id")
+     * */
+    private $categ;
+
+
+
+
+    /**
+     * pour faire activer en auto
+     */
+    public function __construct()
+    {
+        $this->active=true;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Product
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Product
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param string $prix
+     * @return Product
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return string 
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    /**
+     * Set quantite
+     *
+     * @param integer $quantite
+     * @return Product
+     */
+    public function setQuantite($quantite)
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    /**
+     * Get quantite
+     *
+     * @return integer 
+     */
+    public function getQuantite()
+    {
+        return $this->quantite;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Product
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Product
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Product
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Product
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+
+    /**
+     * Set categ
+     *
+     * @param \Troiswa\BackBundle\Entity\Category $categ
+     * @return Product
+     */
+    public function setCateg(\Troiswa\BackBundle\Entity\Category $categ = null)
+    {
+        $this->categ = $categ;
+
+        return $this;
+    }
+
+    /**
+     * Get categ
+     *
+     * @return \Troiswa\BackBundle\Entity\Category 
+     */
+    public function getCateg()
+    {
+        return $this->categ;
+    }
 }

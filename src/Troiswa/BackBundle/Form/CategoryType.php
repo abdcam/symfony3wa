@@ -36,6 +36,7 @@ class CategoryType extends AbstractType
      */
     public function getName()
     {
+
         return 'troiswa_backbundle_category';
     }
 }

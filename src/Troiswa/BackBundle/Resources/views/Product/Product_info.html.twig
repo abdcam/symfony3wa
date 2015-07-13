@@ -7,7 +7,13 @@
     <ul>
        <li>Titre: {{ tableauProducts.title|default('Titre par défaut') }}</li>
        <li>description:{{ tableauProducts.description}}</li>
-       <li>Prix:{{ tableauProducts.prix}} Euros</li> </h2>
+       <li>Prix:{{ tableauProducts.prix}} Euros</li>
+        {% if tableauProducts.categ is not null %}
+            <li>{{ tableauProducts.categ.title}} </li>
+        {% endif %}
+
+        </h2>
+
 
     </ul>
 

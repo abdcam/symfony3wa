@@ -28,6 +28,7 @@
                         <th>id</th>
                         <th>Titre</th>
                         <th>description</th>
+                        <th>produit</th>
                         <th>Action</th>
                     </tr>
 
@@ -40,6 +41,14 @@
                         <td>{{ uneCat.id }}</td>
                         <td>{{  uneCat.title}}</td>
                         <td>{{ uneCat.description}}</td>
+
+                        <td>{% if uneCat.products is not null %}
+                                {% for product in uneCat.products %}
+                                    {{ product.title }}
+                                {% endfor %}
+                            {% else %} pas de produit
+                            {% endif %}</td>
+                        </td>
                         <td>
                             <a href="{{ path('trois_back_Category_info', {idCat : uneCat.id} ) }}" class="btn btn-info">voir</a>
                             <a href="{{ path('trois_back_Category_editer',{idCat : uneCat.id}) }}" class="btn btn-success">Edite/Modif</a>
