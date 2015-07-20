@@ -1,15 +1,16 @@
 <?php
 
 namespace Troiswa\BackBundle\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Troiswa\BackBundle\Entity\Product;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Category
  *
  * @ORM\Table(name="category")
- * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\CategoryRepository")
  */
 class Category
 {
@@ -150,7 +151,11 @@ class Category
      */
     public function addProduct(\Troiswa\BackBundle\Entity\Product $products)
     {
-        $this->products[] = $products;
+       $this->products[] = $products;
+
+        //dump($products);
+       // die();
+        $products -> setCateg($this);
 
         return $this;
     }
@@ -163,6 +168,7 @@ class Category
     public function removeProduct(\Troiswa\BackBundle\Entity\Product $products)
     {
         $this->products->removeElement($products);
+        $products->setCateg(null);
     }
 
     /**
@@ -174,4 +180,34 @@ class Category
     {
         return $this->products;
     }
+
+    /**
+     * @Assert\True (message="categorie invalide")
+     *
+     */
+    //pour valider un formulaire
+    public function isCategoryValid()
+    {
+        if ($this->position==0 && $this->title!="accueil" )
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->title!=ucfirst($this->title))
+        {
+            $context->buildViolation("Le titre {{ value }} doit commencer en majuscule !")
+                    ->atPath("title")
+                    ->setParameter("{{ value }}",$this->title )
+                    ->addViolation();
+        }
+    }
+
+
 }

@@ -1,0 +1,129 @@
+<?php
+
+namespace Troiswa\BackBundle\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * logo
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\logoRepository")
+ */
+class logo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alt", type="string", length=255)
+     */
+    private $alt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="legende", type="string", length=255)
+     */
+    private $legende;
+
+    /**
+     * @ORM\OneToOne(targetEntity="brand")
+     * @ORM\JoinColumn(name="id_brand",referencedColumnName="id")
+     */
+    private $logoimg;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     * @return logo
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string 
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set alt
+     *
+     * @param string $alt
+     * @return logo
+     */
+    public function setAlt($alt)
+    {
+        $this->alt = $alt;
+
+        return $this;
+    }
+
+    /**
+     * Get alt
+     *
+     * @return string 
+     */
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    /**
+     * Set legende
+     *
+     * @param string $legende
+     * @return logo
+     */
+    public function setLegende($legende)
+    {
+        $this->legende = $legende;
+
+        return $this;
+    }
+
+    /**
+     * Get legende
+     *
+     * @return string 
+     */
+    public function getLegende()
+    {
+        return $this->legende;
+    }
+}

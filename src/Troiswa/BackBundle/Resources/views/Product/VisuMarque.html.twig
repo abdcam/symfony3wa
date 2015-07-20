@@ -1,0 +1,65 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block h1 %}
+    Visualisation de toutes les marques des produits
+{% endblock %}
+
+{% block fil_ariane %}
+    {{ parent() }}
+    <li class="active">
+        <i class="fa fa-dashboard"></i> Les marques
+    </li>
+
+{% endblock %}
+
+{% block content %}
+
+    <a href="{{ path("trois_back_AddBrand") }} " class="btn btn-primary">Ajouter une marque</a>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+              <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Titre</th>
+                        <th>description</th>
+                        <th>action</th>
+                        </tr>
+              </thead>
+
+                <tbody>
+                <h1>Toutes les marques des produits </h1>
+                {% for brand in tableauBrand %}
+                    <tr class="active">
+                        <td>{{ brand.id }}</td>
+                        <td>{{  brand.title}}</td>
+                        <td>{{ brand.description}}</td>
+
+                        <td>
+                            <a href="{{ path('trois_back_Brand_info', {idbrand : brand.id} ) }}" class="btn btn-info">voir</a>
+
+                            <a href="{{ path('trois_back_Brand_editer',{idbrand : brand.id}) }}" class="btn btn-success">Edite/Modif</a>
+
+                            <a href="{{ path("trois_back_Brand_supprimer", {idprod: brand.id} ) }}" class="btn btn-danger">supprimer</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+        <p>Le nombre article: {{tableauBrand|length  }} </p>
+
+        date du jour:  {{ "now"|date("m/d/Y") }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset("assets/js/remove.js") }}"></script>
+{% endblock  %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace Troiswa\BackBundle\Entity;
+namespace Troiswa\BackBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -50,5 +50,13 @@ class CategoryRepository extends EntityRepository
         //die;
 //getSingleScalarResult() renvoi le nombre sans aucun commentaire
         return $query->getResult();
+    }
+
+    public function findPositionCategoryForFormType()
+    {
+        $query=$this->createQueryBuilder('cat')
+                    ->orderBy('cat.position', 'ASC');
+
+        return $query;
     }
 }

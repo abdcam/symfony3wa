@@ -19,6 +19,7 @@
 {% block content %}
 
     {{ form_start(formcategory, {attr : {class : 'form-horizontal'} } ) }}
+    {{ form_errors(formcategory) }}
 
     <div class="form-group">
         {{ form_label(formcategory.title,"Titre",{label_attr : {class : "col-sm-2"}}) }}

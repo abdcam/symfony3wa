@@ -1,20 +1,37 @@
 {% extends "TroiswaBackBundle::layout_admin.html.twig" %}
 
-
 {% block content %}
 
     <h1>Affichage d'un produit</h1>
+    {% if tableauProducts.cover is not null  %}
+        <!-- <img src="{#{{ asset (tableauProducts.cover.webPath) }} #}"> remplacer par ci-dessous -->
+
+        <img src="{{ asset (tableauProducts.cover.webPath("thumb-small")) }}">
+    {% endif %}
     <ul>
-       <li>Titre: {{ tableauProducts.title|default('Titre par défaut') }}</li>
-       <li>description:{{ tableauProducts.description}}</li>
-       <li>Prix:{{ tableauProducts.prix}} Euros</li>
-        {% if tableauProducts.categ is not null %}
+           <li>Titre: {{ tableauProducts.title|default('Titre par défaut') }}</li>
+           <li>description:{{ tableauProducts.description}}</li>
+           <li>Prix:{{ tableauProducts.prix}} Euros</li>
+
+<ul class="list-group">
+      <div class="well well-lg">Catégorie:
+        <a href="#" class="list-group-item list-group-item-success">
+            {% if tableauProducts.categ is not null %}
             <li>{{ tableauProducts.categ.title}} </li>
-        {% endif %}
 
-        </h2>
+            {% endif %}
+        </a>
+    </div>
 
+</ul>
 
-    </ul>
+  <div class="well well-lg">Marque:
+        <a href="#" class="list-group-item list-group-item-success">
+            {% if tableauProducts.ProduitMarque is not null %}
+            <li> {{ tableauProducts.ProduitMarque.title}} </li>
+            {% endif %}
+        </a>
+  </div>
+
 
 {% endblock %}

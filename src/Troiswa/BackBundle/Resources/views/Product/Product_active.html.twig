@@ -31,7 +31,6 @@
 
               </thead>
 
-
                 <tbody>
                 <h1>Tous les produits </h1>
                 {% for unproduct in tableauProducts %}
@@ -46,8 +45,6 @@
                            <!-- <a href="{{ path("trois_back_product_supprimer", {idprod: unproduct.id} ) }}" class="btn btn-danger" onclick="return confirm('Etes-vous sûr de supprimer le produit?')">supprimer</a> -->
 
                             <a href="{{ path("trois_back_product_supprimer", {idprod: unproduct.id} ) }}" class="btn btn-danger">supprimer</a>
-
-
 
                         </td>
                     </tr>
@@ -83,8 +80,6 @@
         {% for unProduct in tableauProducts|reverse %}
         {{ unProduct.title}}
         {% endfor %}
-
-
 
 {% endblock %}
 

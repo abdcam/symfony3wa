@@ -92,4 +92,199 @@ du produit. ex : récupérer le produit ainsi que sa catégorie grâce à un joi
 http://symfony.com/fr/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 
 
+///DDDDDDDDDDDDDDDDDD   15/07/2015  DDDDDDDDDDDDDDDD
+Les points faits à ce jour
+1)- les contraintes de validation dans les formulaires
+2)- correction dans categorie pour afficher la liste des produits
+voir la liste deroulante en symfony2
+http://symfony.com/fr/doc/current/reference/forms/types/entity.html
+
+3)-http://symfony.com/fr/doc/current/reference/forms/types/collection.html#by-referencephpdate_created
+
+Créer une entité Brand avec les propriétés suivantes :
+- title
+- description
+- slug
+- dateCreated
+- DateUpdated
+
+Donner la possibilité d'avoir une marque pour un produit
+Donner la possibilité d'avoir plusieurs produits pour une marque
+
+Minimum : Visualiser et créer des marques
+Faire apparaître les marques dans le formulaire de création d'un produit
+En affichant le titre et la date de création
+Afficher les produits dans le formulaire de création d'une marque
+Créer un callback sur une marque afin d'éviter de créer la marque 3wa ;)
+
+Bonus :
+- Faire une requête permettant d'afficher les catégories dont les produits ont la marque "X"
+Remplacer X par une marque
+
+16/07/2015
+
+voir: comme bootstrap: http://www.layoutit.com/ ; codrop.com
+
+Fixture en symfon 2: nou
+images:
+http://symfony.com/fr/doc/current/reference/constraints/File.html
+
+http://php.net/manual/fr/function.image-type-to-mime-type.php
+
+17/07/2015
+Exo 1
+Créer une entité logo avec un id (créé par défaut), un nom, un alt et une légende
+que l'on pourra afficher par la suite comme ceci
+<figure>
+    <img src="" alt="">
+    <figcaption>Ceci est la légende du logo</figcaption>
+</figure>
+
+Relier l'entité logo à l'entité marque
+Rajouter la possibilité d'ajouter un logo lors de la création d'une marque
+
+
+Contraintes : http://symfony.com/fr/doc/current/reference/constraints.html
+
+DOC À REVOIR:
+
+http://doctrine-orm.readthedocs.org/en/latest/reference/events.html
+https://openclassrooms.com/courses/developpez-votre-site-web-avec-le-framework-symfony2/les-evenements-et-extensions-doctrine
+
+
+20/07/15
+cette bundle c'est pour faire la pagination
+https://github.com/KnpLabs/KnpPaginatorBundle
+voir sur le site pour installer et le configurer:
+1) install:
+console>php composer.phar require knplabs/knp-paginator-bundle puis valider
+2)console>php composer.phar self -update puis validez
+3) allez dans config puis ajoute çà qui vient du bundle: knp_paginator:
+page_range: 5                      # default page range used in pagination control
+default_options:
+page_name: page                # page query parameter name
+sort_field_name: sort          # sort field query parameter name
+sort_direction_name: direction # sort direction query parameter name
+distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+template:
+pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
+sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+4) ajouter çà dans kernel.php ou se trouve les bundle en mettant une virgule:new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+5) Dans productController.php on ajoute la partie du bundle
+6) dans la vue on ajoute aussi
+
+Exo :
+
+Ajouter un utilisateur en validant ces informations :
+- L'utilisateur doit pouvoir rentrer 2 fois son mot de passe :
+repeat au niveau des type de formulaire
+
+- Créer un Assert\Callback pour éviter que quelqu'un prenne le pseudo admin
+et/ou le mot de passe admin
+
+- Créer un Assert : @TelValide   pouvant prendre un message afin de vérifier si
+un numéro de téléphone est valide
+ex : @TelValide(message="custom message")
+ex : @TelValide()
+
+- Créer un Assert : @motdepasse permettant de vérifier si un mot de passe est assez puissant
+- Le mot de passe peut prendre un chiffre permettant de donner le nombre de caractère souhaité
+- Le mot de passe peut prendre des caractères que l'utilisateur doit au moins mettre
+Ex : @motdepasse()
+Ex : @motdepasse(min="4")
+Ex : @motdepasse(min="8", caractere="%_-")
+
+- Créer les fixtures pour les utilisateurs
+- N'oubliez pas de mettre des liens sur votre site
+- Créer les fixtures pour les marques
+-
+
+PENSEZ A UTILISER php app/console cache:clear
+Utiliser https://regex101.com/ pour tester vos regex
+
+
+les commandes pour la mise en prod
+php composer.phar self-update
+
+php composer.phar update --optimize-autoloader
+
+
+php app/console cache:clear --env=prod
+
+
+Ajouter au onfig_prod.yml
+framework:
+router:
+resource: "%kernel.root_dir%/config/routing_dev.yml"
+strict_requirements: true
+profiler: { only_exceptions: false }
+
+web_profiler:
+toolbar: true
+intercept_redirects: false
+
+DDDDDDDDDDDDDDDDDDDD
+Deplacement de tous les Repository dans un dossier Repository puis regler les autres fichiers en remplacent Entity par Repository
+
+DDDDDDDDDDDDDD
+
+
+
+<?php
+
+namespace Troiswa\BackBundle\Validator;
+
+use Symfony\Component\Validator\Constraint;
+
+/**
+ * @Annotation
+ */
+class StrongPassword extends Constraint
+{
+    public $min = 8;
+    public $messageMin = "Votre mot de passe n'est pas assez fort. Il doit faire {{ limit }} caractères";
+    public $caractere = "%-_";
+    public $messageCaractere = "Votre mot de passe doit contenir les caractères suivants {{ valid }}";
+
+}
+
+
+/**
+ * @var string
+ * @StrongPassword(min="10", messageMin="Attention")
+ * @ORM\Column(name="password", type="string", length=255)
+ */
+private $password;
+
+
+namespace Troiswa\BackBundle\Validator;
+
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+
+class StrongPasswordValidator extends ConstraintValidator
+{
+    public function validate($value, Constraint $constraint)
+    {
+        if(strlen($value) < $constraint->min)
+{
+$this->context->buildViolation($constraint->messageMin)
+->setParameter('{{ limit }}', $constraint->min)
+->addViolation();
+}
+elseif($constraint->caractere && !preg_match("#[".$constraint->caractere."]#", $value))
+{
+$this->context->buildViolation($constraint->messageCaractere)
+->setParameter('{{ valid }}', $constraint->caractere)
+->addViolation();
+}
+
+}
+}
+
+
+
+
+
 

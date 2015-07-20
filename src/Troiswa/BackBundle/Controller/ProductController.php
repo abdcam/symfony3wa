@@ -5,24 +5,34 @@ namespace Troiswa\BackBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Troiswa\BackBundle\Entity\Product;
+use Troiswa\BackBundle\Repository\Product;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troiswa\BackBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProductController extends Controller
-
 {
-    public function ProductAction()
+    public function ProductAction(Request $request)
     {
         $em=$this->getDoctrine()->getManager();
         $products=$em->getRepository("TroiswaBackBundle:Product")
                  // ->findAll();
                 ->findAllProductwithCategory();
 
+//cette action a été ajouté pour faire la pagination des products
+        $dql   = "SELECT a FROM TroiswaBackBundle:Product a";
+        $query = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+
         //dump($products);
         //die();
-        return $this->render("TroiswaBackBundle:Product:Product.html.twig", ['tableauProducts' => $products]);
+        return $this->render("TroiswaBackBundle:Product:Product.html.twig", ['tableauProducts' => $pagination]);
     }
 
     /**
@@ -117,8 +127,6 @@ class ProductController extends Controller
             ->add("send","submit");
 
 
-
-
         $formproduct->handleRequest($request);
 
         if($formproduct->isValid())
@@ -126,7 +134,16 @@ class ProductController extends Controller
             //dump($product);
             //die('error');
 
+            $cover=$product->getCover();
+
+            $cover->setAlt($product->getTitle());
+
+            //$cover->upload();
+            //die();
+
+
             $em=$this->getDoctrine()->getManager();
+            //$em->persist($cover);
             $em->persist($product);
             //$product->setTitle("Modification après persist");
             $em->flush();
@@ -147,10 +164,12 @@ class ProductController extends Controller
         $em=$this -> getDoctrine()-> getManager();
         $product = $em-> getRepository("TroiswaBackBundle:Product")
                     ->find($idprod);
+
         if(empty($product))
         {
             throw $this->createNotFoundException("Attention");
         }
+
 
         $formUdaptProduct=$this->createForm(new ProductType(), $product)
                             ->add('update', 'submit');
@@ -159,6 +178,8 @@ class ProductController extends Controller
 
         if($formUdaptProduct->isValid())
         {
+            $image = $product->getCover();
+           // $image->upload();
             $em->flush();
 
             $this->get("session")->getFlashBag()->add("success","votre produit été bien mis à jour");
@@ -182,7 +203,10 @@ class ProductController extends Controller
             throw $this->createNotFoundException("Attention");
         }
 
+        //dump($product);
+
         $em->remove($product);
+
         $em->flush();
 
         return $this->render("TroiswaBackBundle:Product:supp_product.html.twig");

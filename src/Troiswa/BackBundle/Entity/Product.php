@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Product
  *
  * @ORM\Table(name="product")
- * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Entity\ProductRepository")
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\ProductRepository")
  */
 class Product
 {
@@ -55,7 +55,7 @@ class Product
      * @Assert\NotBlank()
      *  @Assert\Length(
      *      max = "10",
-     *      maxMessage = "La description ne peut pas être plus long que {{ limit }} caractères"
+     *      maxMessage = "Le prix ne peut pas être plus long que {{ limit }} caractères"
      * )
      */
     private $prix;
@@ -113,15 +113,25 @@ class Product
      * */
     private $categ;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Troiswa\BackBundle\Entity\Brand",inversedBy="products")
+     * @ORM\JoinColumn(name="id_brand",referencedColumnName="id", nullable=true)
+     * */
+    private $ProduitMarque;
 
-
+    /**
+    * @ORM\OneToOne(targetEntity="ProductCover", cascade={"persist", "remove"})
+    * @ORM\JoinColumn(name="id_productcover",referencedColumnName="id")
+    *
+    */
+    private $cover;
 
     /**
      * pour faire activer en auto
      */
     public function __construct()
     {
-        $this->active=true;
+        $this->active=true;//php app/console doctrine:generate:entities TroiswaBackBundle:Product
     }
 
     /**
@@ -340,5 +350,51 @@ class Product
     public function getCateg()
     {
         return $this->categ;
+    }
+
+    /**
+     * Set ProduitMarque
+     *
+     * @param \Troiswa\BackBundle\Entity\Brand $produitMarque
+     * @return Product
+     */
+    public function setProduitMarque(\Troiswa\BackBundle\Entity\Brand $produitMarque = null)
+    {
+        $this->ProduitMarque = $produitMarque;
+
+        return $this;
+    }
+
+    /**
+     * Get ProduitMarque
+     *
+     * @return \Troiswa\BackBundle\Entity\Brand 
+     */
+    public function getProduitMarque()
+    {
+        return $this->ProduitMarque;
+    }
+
+    /**
+     * Set cover
+     *
+     * @param \Troiswa\BackBundle\Entity\ProductCover $cover
+     * @return Product
+     */
+    public function setCover(\Troiswa\BackBundle\Entity\ProductCover $cover = null)
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    /**
+     * Get cover
+     *
+     * @return \Troiswa\BackBundle\Entity\ProductCover 
+     */
+    public function getCover()
+    {
+        return $this->cover;
     }
 }
