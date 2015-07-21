@@ -22,6 +22,12 @@ class ProductType extends AbstractType
             ->add("prix")
             ->add("quantite","integer")
             ->add("active")
+            ->add("tag", 'entity', [
+                'class' => 'TroiswaBackBundle:Tag',
+                'property' => 'word',
+                'multiple' => true
+            ])
+
             //a été ajouté pour mettre les cat et ordonner avec position
                 /*
             ->add("categ","entity",

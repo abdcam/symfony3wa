@@ -1,13 +1,46 @@
 security:
 
+    encoders:
+        #Symfony\Component\Security\Core\User\User: plaintext
+        Troiswa\BackBundle\Entity\User: plaintext
+          #algorithm: bcrypt
+          #cost: 15
+
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+        ROLE_ADMIN: [ROLE_USER]
+
     providers:
-        in_memory:
-            memory: ~
+      in_memory:
+        memory:
+          users:
+            admin: #nom d'utilsateur
+              password: motdepasse #mot de passe pour l'utilisateur admin
+              roles: ROLE_ADMIN
+            toto: { password: bidule,roles: ROLE_USER} #utilisateur toto avec le mot de passe bidule
+      provider_back:
+          entity: { class: TroiswaBackBundle:User, property: username }
 
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
-            security: false
+      dev:
+        pattern: ^/(_(profiler|wdt|error)|css|images|js)/
+        security: false
 
-        main:
-            anonymous: ~
+      administration:
+        pattern: ^/admin  #toutes les url ki commence par admin va les bloquer
+        anonymous: true
+        #http_basic:    #va creer une ptite boite de dialog
+          #realm: "Attention zone réservée"
+          #provider: in_memory   #ou allez chercher les utilisateurs
+          #provider: provider_back
+        form_login:
+            check_path: troiswa_back_login_check
+            login_path: troiswa_back_login
+
+        provider: provider_back
+
+        switch_user: { role: ROLE_ADMIN, parameter: _want_to_be_this_user }
+
+    #access_control:
+      #- { path: ^/admin/product, role: ROLE_ADMIN } #ici acces autorise ke l'admin pas pour les user
+     # - { path: ^/admin, role: IS_AUTHENTICATED_ANONYMOUSLY }

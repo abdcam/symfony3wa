@@ -23,6 +23,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+
         $entities = $em->getRepository('TroiswaBackBundle:User')->findAll();
 
         return $this->render('TroiswaBackBundle:User:index.html.twig', array(

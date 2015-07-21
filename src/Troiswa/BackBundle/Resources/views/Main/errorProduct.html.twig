@@ -1,0 +1,10 @@
+ <p> Voici tousles produis de la list de notre projet </p>
+
+ <a href="{{ path('trois_back_Product') }}"><i class="fa fa-fw fa-bar-chart-o"></i>produit</a>
+
+ <ul>
+{% for product in productBetween %}
+    <li>Titre : {{ product.title }}</li>
+    <li>prix du produit : {{ product.prix }}</li>
+{% endfor %}
+ </ul>

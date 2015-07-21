@@ -5,6 +5,7 @@ namespace Troiswa\BackBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Troiswa\BackBundle\Entity\User;
 
 class MainController extends Controller
 {
@@ -52,6 +53,14 @@ class MainController extends Controller
 
     public function indexAction(Request $request)
     {
+        /* code de securité
+         * $user = new User();
+        $factory = $this->get('security.encoder_factory');
+
+        $encoder = $factory->getEncoder($user);
+        $password = $encoder->encodePassword('admin', null);
+        echo $password;
+        die;*/
         $em=$this->getDoctrine()->getManager();
         $idprod=15;
         $query=$em->createQueryBuilder()
@@ -103,9 +112,17 @@ class MainController extends Controller
         $em=$this->getDoctrine()->getManager();
         $categoryDebutTitr=$em->getRepository("TroiswaBackBundle:Category")
             ->findCategoryDebutTitre("text");
-        dump($categoryDebutTitr);
-        die;
-
+        //dump($categoryDebutTitr);
+       // die;
         return $this->render("TroiswaBackBundle:Main:index.html.twig");
+    }
+
+    public function errorProductAction()
+    {
+        $em=$this->getDoctrine()->getManager();
+        $productBetween=$em->getRepository("TroiswaBackBundle:Product")
+            ->findErrorProductBetweenPrice(5,20);
+
+        return $this->render("TroiswaBackBundle:Main:errorProduct.html.twig", ["productBetween" => $productBetween]);
     }
 }

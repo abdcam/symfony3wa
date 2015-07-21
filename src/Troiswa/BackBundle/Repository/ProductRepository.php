@@ -88,6 +88,19 @@ class ProductRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findErrorProductBetweenPrice($min,$max)
+    {
+        $query=$this->getEntityManager()->createQuery("
+                       Select prod
+                       from TroiswaBackBundle:Product prod
+                       where prod.prix between :minprice and :maxprice
+                        ")
+            ->setParameter("minprice",$min)
+            ->setParameter("maxprice",$max);
+
+        return $query->getResult();
+    }
+
     public function findAllProductwithCategory()
     {
         $query=$this->getEntityManager()->createQuery("

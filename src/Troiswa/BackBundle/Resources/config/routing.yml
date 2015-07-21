@@ -3,7 +3,7 @@ troiswa_back_user:
     prefix:   /user
 
 trois_back_administration:
-  path: /admin
+  path: /
   defaults: { _controller:TroiswaBackBundle:Main:index}
 
 trois_back_resource_static:
@@ -24,6 +24,20 @@ trois_back_resource_category:
 trois_back_resource_Brand:
   resource: "@TroiswaBackBundle/Resources/config/routing/Brand.yml"
   prefix: /Marque
+
+
+troiswa_back_connexion:
+    resource: "@TroiswaBackBundle/Resources/config/routing/login.yml"
+    prefix:   /
+
+
+
+
+
+
+
+
+
 
 
 

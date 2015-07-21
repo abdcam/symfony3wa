@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="{{ _charset }}" />
+    <title>An Error Occurred: {{ status_text }}</title>
+</head>
+<body>
+<h1>vous avez erreur 404 de ton prod symfony 3wa</h1>
+
+<h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
+
+<div>
+    Vous pouvez allez sur ce lien:
+
+    <a href="{{ path('trois_back_contact') }}"><i class="fa fa-fw fa-bar-chart-o"></i> contact</a>
+    Vous avez aussi:
+    <a href="{{ path('trois_back_feedback') }}"><i class="fa fa-fw fa-bar-chart-o"></i> feedback</a>
+
+    {{ render(controller('TroiswaBackBundle:Main:errorProduct')) }}
+</div>
+</body>
+</html>

@@ -22,7 +22,6 @@ class BrandController extends Controller
             ->findAllMarque();
         //dump($categories);
         //die();
-
         return $this->render("TroiswaBackBundle:Product:VisuMarque.html.twig", ['tableauBrand' => $brand]);
     }
 

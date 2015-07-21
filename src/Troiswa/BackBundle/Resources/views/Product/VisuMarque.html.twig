@@ -39,11 +39,11 @@
                         <td>{{ brand.description}}</td>
 
                         <td>
-                            <a href="{{ path('trois_back_Brand_info', {idbrand : brand.id} ) }}" class="btn btn-info">voir</a>
+                            <a href="{{ path('trois_back_Brand_info', {"idbrand" : brand.id} ) }}" class="btn btn-info">voir</a>
 
-                            <a href="{{ path('trois_back_Brand_editer',{idbrand : brand.id}) }}" class="btn btn-success">Edite/Modif</a>
+                            <a href="{{ path('trois_back_Brand_editer',{"idbrand" : brand.id}) }}" class="btn btn-success">Edite/Modif</a>
 
-                            <a href="{{ path("trois_back_Brand_supprimer", {idprod: brand.id} ) }}" class="btn btn-danger">supprimer</a>
+                            <a href="{{ path("trois_back_Brand_supprimer", {"idbrand": brand.id} ) }}" class="btn btn-danger">supprimer</a>
 
                         </td>
                     </tr>

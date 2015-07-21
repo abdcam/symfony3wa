@@ -197,8 +197,6 @@ class Brand
         return $this->title;
     }
 
-  
-
     /**
      * Set logoimg
      *

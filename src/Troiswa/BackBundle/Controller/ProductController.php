@@ -5,15 +5,24 @@ namespace Troiswa\BackBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Troiswa\BackBundle\Repository\Product;
+use Troiswa\BackBundle\Entity\Product;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troiswa\BackBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProductController extends Controller
 {
     public function ProductAction(Request $request)
     {
+        #cette condition  if controle l'accès aux produits c'est la securité
+        /*
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à cette page');
+        }
+        */
+
         $em=$this->getDoctrine()->getManager();
         $products=$em->getRepository("TroiswaBackBundle:Product")
                  // ->findAll();
@@ -141,7 +150,6 @@ class ProductController extends Controller
             //$cover->upload();
             //die();
 
-
             $em=$this->getDoctrine()->getManager();
             //$em->persist($cover);
             $em->persist($product);
@@ -159,6 +167,12 @@ class ProductController extends Controller
             ]
         );
     }
+
+        /**
+         * ici c'est pour faire la securite avec anotation
+         * @Security("has_role('ROLE_ADMIN')")
+         */
+
     public function editeAction($idprod,Request $request)
     {
         $em=$this -> getDoctrine()-> getManager();

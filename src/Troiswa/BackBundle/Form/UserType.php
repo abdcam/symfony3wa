@@ -28,7 +28,7 @@ class UserType extends AbstractType
                 'options' => array('required' => true),
                 'first_options'  => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Mot de passe (validation)'),
-            ));
+        ));
         ;
     }
     
