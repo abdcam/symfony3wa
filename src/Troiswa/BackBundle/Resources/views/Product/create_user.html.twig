@@ -1,0 +1,117 @@
+{% extends "TroiswaBackBundle::layout_admin.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block h1 %}
+    Utilisateur
+{% endblock %}
+
+{% block fil_ariane %}
+    {{ parent() }}
+    <li class="active">
+        <i class="fa fa-dashboard"></i> User
+    </li>
+
+{% endblock %}
+
+{% block content %}
+
+{#{{ form(formproduct) }}#}
+
+    {{ form_start(formproduct, {attr : {class : 'form-horizontal'} } ) }}
+
+    <div class="form-group">
+        {{ form_label(formproduct.prenom,"prénom",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.prenom, {attr:{ class:"form-erreur"}}) }}
+        <div class="col-sm-10">
+            {{ form_widget(formproduct.prenom, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formproduct.nom,"Nom",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.nom, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            {{ form_widget(formproduct.nom, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formproduct.email,"email",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.email, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            {{ form_widget(formproduct.email, {attr:{ class:"form-control"}}) }}
+        </div>
+    </div>
+    <div>
+
+        <div class="form-group">
+            {{ form_label(formproduct.birthday,"Birthday",{label_attr : {class : "col-sm-2"}}) }}
+            {{ form_errors(formproduct.birthday, {attr:{ class:"form-erreur"}}) }}
+
+            <div class="col-sm-10">
+                {{ form_widget(formproduct.birthday, {attr:{ class:"form-control"}}) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(formproduct.telephone,"telephone",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.telephone, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <!-- Button and dropdown menu -->
+                </div>
+                {{ form_widget(formproduct.telephone, {attr:{ class:"form-control"}}) }}
+            </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(formproduct.pseudo,"pseudo",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.pseudo, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <!-- Button and dropdown menu -->
+                </div>
+                {{ form_widget(formproduct.pseudo, {attr:{ class:"form-control"}}) }}
+            </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(formproduct.adresse,"adresse",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.adresse, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <!-- Button and dropdown menu -->
+                </div>
+                {{ form_widget(formproduct.adresse, {attr:{ class:"form-control"}}) }}
+            </div>
+    </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(formproduct.password,"password",{label_attr : {class : "col-sm-2"}}) }}
+        {{ form_errors(formproduct.password, {attr:{ class:"form-erreur"}}) }}
+
+        <div class="col-sm-10">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <!-- Button and dropdown menu -->
+                </div>
+                {{ form_widget(formproduct.password, {attr:{ class:"form-control"}}) }}
+            </div>
+    </div>
+
+    <div class="form-group">
+        {# {{ form_widget(formUdaptProduct.button,{label:"Send"}) }}#}
+    </div>
+
+    {{ form_end(formproduct) }}
+
+{% endblock %}

@@ -1,0 +1,59 @@
+<?php
+
+namespace Troiswa\BackBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * coupon
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\couponRepository")
+ */
+class coupon
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255)
+     */
+    private $code;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="detail", type="string", length=255)
+     */
+    private $detail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="reduction", type="string", length=255)
+     */
+    private $reduction;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="type", type="boolean")
+     */
+    private $type;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_expire", type="datetime")
+     */
+    private $dateExpire;
+    
+}

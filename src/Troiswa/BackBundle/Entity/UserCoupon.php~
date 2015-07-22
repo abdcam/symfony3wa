@@ -1,0 +1,40 @@
+<?php
+
+namespace Troiswa\BackBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Coupon
+ *
+ * @ORM\Table(name="user_coupon")
+ * @ORM\Entity()
+ */
+class UserCoupon
+{
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Troiswa\BackBundle\Entity\User", inversedBy="coupon")
+     * @ORM\JoinColumns({
+     *			@ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Troiswa\BackBundle\Entity\Coupon")
+     * @ORM\JoinColumns({
+     *			@ORM\JoinColumn(name="id_coupon", referencedColumnName="id")
+     * })
+     */
+    private $coupon;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="used", type="boolean")
+     */
+    private $used;
+
+}

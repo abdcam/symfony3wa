@@ -279,7 +279,6 @@ $this->context->buildViolation($constraint->messageCaractere)
 ->setParameter('{{ valid }}', $constraint->caractere)
 ->addViolation();
 }
-
 }
 }
 ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -294,14 +293,12 @@ exo1 err404
 
 php app/console cache:clear --env=prod
 
-
 - Affichage de la page 404 : (indice : utiliser render en twig)
 - Texte explicatif
 - Faire un lien vers la page contact et feedback
 - Afficher les 3 produits les plus chers
 DDDDDDDDDDDDDD
 exo2:
-
 
 php app/console doctrine:generate:entity
 
@@ -315,6 +312,21 @@ php app/console doctrine:generate:entities TroiswaBackBundle:Product
 - Créer le crud des tags
 - Créer un tag grâce au formulaire de création de tag
 
+DDDDDDDDDDDD  22/07/15    DDDDDDDDDDDDDDDD
+pour voir les routes
+voir: php app/console debug router entrez
 
+1) création de console pour créer des users:
+php app/console troiswa:user:create toto bidule
+2) exo proj
+Créer une commande permettant de créer un utilisateur en BDD
+Cette commande prend 2 paramètres obligatoires : le login et le mot de passe
+Elle insert en BDD le nouvelle utilisateur
+Si une option existe (ex : --exist) alors cela met à jour un utilisateur
+Bonus : Afficher des messages erreurs ou de succès
+
+Resultat: Pour avoir comme çà: php app/console troiswa:user:create toto bidul
+
+voir la solution dans app/src/Troiswa/BackBundle/Command/Fichier:TroiswaCreationUserCommand.php
 
 

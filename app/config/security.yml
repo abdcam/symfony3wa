@@ -2,33 +2,42 @@ security:
 
     encoders:
         #Symfony\Component\Security\Core\User\User: plaintext
-        Troiswa\BackBundle\Entity\User: plaintext
-          #algorithm: bcrypt
-          #cost: 15
+        Troiswa\BackBundle\Entity\User:
+          algorithm: bcrypt
+          cost: 13
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
-        ROLE_ADMIN: [ROLE_USER]
+        ROLE_ADMIN: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_USER: [ROLE_ALLOWED_TO_SWITCH]
 
     providers:
       in_memory:
         memory:
-          users:
+          users: # Utilisateur en mémoire
             admin: #nom d'utilsateur
               password: motdepasse #mot de passe pour l'utilisateur admin
               roles: ROLE_ADMIN
             toto: { password: bidule,roles: ROLE_USER} #utilisateur toto avec le mot de passe bidule
+
       provider_back:
-          entity: { class: TroiswaBackBundle:User, property: username }
+          #entity : { class: TroiswaBackBundle:User, property: pseudo }
+          #entity: { class: TroiswaBackBundle:User, property: email }
+          # Visualiser la méthode loadUserByUsername dans UserRepository pour mieux comprendre
+          entity: { class: TroiswaBackBundle:User }
 
     firewalls:
       dev:
         pattern: ^/(_(profiler|wdt|error)|css|images|js)/
         security: false
 
+      login_firewall:
+        pattern: ^/admin/login$
+        anonymous: true
+
       administration:
         pattern: ^/admin  #toutes les url ki commence par admin va les bloquer
-        anonymous: true
+        anonymous: false
         #http_basic:    #va creer une ptite boite de dialog
           #realm: "Attention zone réservée"
           #provider: in_memory   #ou allez chercher les utilisateurs
@@ -36,10 +45,17 @@ security:
         form_login:
             check_path: troiswa_back_login_check
             login_path: troiswa_back_login
+            default_target_path: trois_back_administration
+            always_use_default_target_path: true
+        logout:
+            path: troiswa_back_logout
+            target: /admin/login
+
 
         provider: provider_back
 
-        switch_user: { role: ROLE_ADMIN, parameter: _want_to_be_this_user }
+       # switch_user: { role: ROLE_ADMIN, parameter: _want_to_be_this_user }
+        switch_user: { role: ROLE_USER }
 
     #access_control:
       #- { path: ^/admin/product, role: ROLE_ADMIN } #ici acces autorise ke l'admin pas pour les user

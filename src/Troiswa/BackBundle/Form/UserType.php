@@ -17,7 +17,11 @@ class UserType extends AbstractType
         $builder
             ->add('prenom')
             ->add('nom')
-            ->add('email')
+            ->add('email',"email", [
+        "constraints" => new Assert\Email(array(
+            'message' => "'{{ value }}' n'est pas un email valide.",
+            'checkMX' => true,
+        ))])
             ->add('birthday')
             ->add('telephone')
             ->add('pseudo')
@@ -28,7 +32,9 @@ class UserType extends AbstractType
                 'options' => array('required' => true),
                 'first_options'  => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Mot de passe (validation)'),
-        ));
+        ))
+            ->add('_remember_me', 'checkbox')
+            ->add('submit', 'submit'); // new!;
         ;
     }
     

@@ -232,7 +232,7 @@ class ProductController extends Controller
         $products = $em-> getRepository("TroiswaBackBundle:Product")
             //findBy est une rquette en doctrine
                         ->findBy(["active"=>true], ["prix"=>"Asc"]);
-        return $this->render("TroiswaBackBundle:Product:Product.html.twig", ['tableauProducts' => $products]);
+        return $this->render("TroiswaBackBundle:Product:Product_active.html.twig", ['tableauProducts' => $products]);
     }
 
     public function  productLimitAction(Request $request)

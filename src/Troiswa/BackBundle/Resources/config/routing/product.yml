@@ -8,7 +8,7 @@ trois_back_Product_info:
   requirements:
     idCat: \d+
 
-trois_back_product:
+trois_back_product_add:
     path: /add
     defaults: { _controller:TroiswaBackBundle:Product:addproduct}
 
