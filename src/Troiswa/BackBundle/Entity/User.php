@@ -2,6 +2,7 @@
 
 namespace Troiswa\BackBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,8 +16,18 @@ use Troiswa\BackBundle\Validator\GoodTel;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
+    public function serialize()
+    {
+        return serialize([$this->id]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list ($this->id) = unserialize($serialized);
+    }
+
     /**
      * @var integer
      *
@@ -103,6 +114,13 @@ class User implements UserInterface
      *
      */
     private $coupon;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Role")
+     *
+     */
+    private $roles;
+
 
     /**
      * Get id
@@ -337,7 +355,7 @@ class User implements UserInterface
     public function getRoles()
     {
         // TODO: Implement getRoles() method.
-        return ['ROLE_USER'];
+        return $this->roles->toArray();
     }
 
     /**
@@ -390,6 +408,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->coupon = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roles=new ArrayCollection();
     }
 
     /**
@@ -423,5 +442,28 @@ class User implements UserInterface
     public function getCoupon()
     {
         return $this->coupon;
+    }
+
+    /**
+     * Add roles
+     *
+     * @param \Troiswa\BackBundle\Entity\Role $roles
+     * @return User
+     */
+    public function addRole(\Troiswa\BackBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \Troiswa\BackBundle\Entity\Role $roles
+     */
+    public function removeRole(\Troiswa\BackBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
     }
 }

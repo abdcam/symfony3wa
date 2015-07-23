@@ -4,8 +4,9 @@ namespace Troiswa\BackBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Troiswa\BackBundle\Entity\User;
+use Troiswa\BackBundle\Form\UserEditType;
 use Troiswa\BackBundle\Form\UserType;
 
 /**
@@ -33,23 +34,37 @@ class UserController extends Controller
     /**
      * Creates a new User entity.
      *
+     * @Security("has_role('ROLE_COMMERCIAL')")
      */
     public function createAction(Request $request)
     {
+
         $entity = new User();
         $form = $this->createCreateForm($entity);
+
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $entity->setUsername($entity->getPseudo());
+            // hashé le mot de passe
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($entity);
+            $newPassword = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+            $entity->setPassword($newPassword);
             $em = $this->getDoctrine()->getManager();
+
+            // Attribution du role
+            $roles = $em->getRepository('TroiswaBackBundle:Role')->findOneByName('client');
+            $entity->addRole($roles);
+
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('troiswa_back_User_info', array('id' => $entity->getId())));
         }
 
 
-        return $this->render('TroiswaBackBundle:User:new.html.twig', array(
+        return $this->render('TroiswaBackBundle:User:new_user.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -65,7 +80,7 @@ class UserController extends Controller
     private function createCreateForm(User $entity)
     {
         $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('user_create'),
+            'action' => $this->generateUrl('troiswa_back_User_create'),
             'method' => 'POST',
         ));
 
@@ -77,13 +92,14 @@ class UserController extends Controller
     /**
      * Displays a form to create a new User entity.
      *
+     * @Security("has_role('ROLE_COMMERCIAL')")
      */
     public function newAction()
     {
         $entity = new User();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('TroiswaBackBundle:User:new.html.twig', array(
+        return $this->render('TroiswaBackBundle:User:new_user.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -92,6 +108,7 @@ class UserController extends Controller
     /**
      * Finds and displays a User entity.
      *
+     * @Security("has_role('ROLE_CLIENT')")
      */
     public function showAction($id)
     {
@@ -114,9 +131,11 @@ class UserController extends Controller
     /**
      * Displays a form to edit an existing User entity.
      *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction($id)
     {
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('TroiswaBackBundle:User')->find($id);
@@ -144,8 +163,8 @@ class UserController extends Controller
     */
     private function createEditForm(User $entity)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('user_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new UserEditType(), $entity, array(
+            'action' => $this->generateUrl('troiswa_back_user_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -172,9 +191,10 @@ class UserController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('troiswa_back_User_editer', array('id' => $id)));
         }
 
         return $this->render('TroiswaBackBundle:User:edit.html.twig', array(
@@ -185,7 +205,7 @@ class UserController extends Controller
     }
     /**
      * Deletes a User entity.
-     *
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -204,7 +224,7 @@ class UserController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('user'));
+        return $this->redirect($this->generateUrl('troiswa_back_User'));
     }
 
     /**
@@ -217,7 +237,7 @@ class UserController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('troiswa_back_User_supprimer', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

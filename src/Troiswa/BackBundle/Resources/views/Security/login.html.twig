@@ -11,4 +11,10 @@
     <input type="password" id="password" name="_password" />
 
     <button type="submit">login</button>
+
+    <label>
+        <input type="checkbox" name="_remember_me">
+        Rester connecté
+    </label>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 </form>

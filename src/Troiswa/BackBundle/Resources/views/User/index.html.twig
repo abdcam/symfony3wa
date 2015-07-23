@@ -14,14 +14,14 @@
                 <th>Telephone</th>
                 <th>Pseudo</th>
                 <th>Adresse</th>
-                <th>Password</th>
+               <!-- <th>Password</th>  -->
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('troiswa_back_User_info', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
 
                 <td>{{ entity.prenom }}</td>
                 <td>{{ entity.nom }}</td>
@@ -30,14 +30,14 @@
                 <td>{{ entity.telephone }}</td>
                 <td>{{ entity.pseudo }}</td>
                 <td>{{ entity.adresse }}</td>
-                <td>{{ entity.password }}</td>
+                <td>{#{ entity.password }#}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('user_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('troiswa_back_User_info', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('user_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('troiswa_back_User_editer', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -48,7 +48,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('user_new') }}">
+            <a href="{{ path('troiswa_back_User_add') }}">
                 Create a new entry
             </a>
         </li>

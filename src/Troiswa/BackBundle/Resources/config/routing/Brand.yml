@@ -1,27 +1,27 @@
-trois_back_Brand:
+troiswa_back_Brand:
     path: /
     defaults: { _controller:TroiswaBackBundle:Brand:Brand}
 
-trois_back_AddBrand:
+troiswa_back_AddBrand:
     path: /Add
     defaults: { _controller:TroiswaBackBundle:Brand:Brand_Add}
     requirements:
         idCat: \d+
 
-trois_back_Brand_info:
-    path: /information/{idprod}
+troiswa_back_Brand_info:
+    path: /information/{idbrand}
     defaults: { _controller:TroiswaBackBundle:Brand:Brand_infomation}
     requirements:
         idCat: \d+
 
-trois_back_Brand_editer:
-    path: /editer/{idprod}
+troiswa_back_Brand_editer:
+    path: /editer/{idbrand}
     defaults: { _controller:TroiswaBackBundle:Brand:Brand_editer}
     requirements:
         idCat: \d+
 
-trois_back_Brand_supprimer:
-    path: /supprimer/{idprod}
+troiswa_back_Brand_supprimer:
+    path: /supprimer/{idbrand}
     defaults: { _controller:TroiswaBackBundle:Brand:Brand_supprimer}
     requirements:
         idCat: \d+

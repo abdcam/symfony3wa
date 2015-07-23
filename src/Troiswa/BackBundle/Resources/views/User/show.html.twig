@@ -1,6 +1,6 @@
 {% extends "TroiswaBackBundle::layout_admin.html.twig" %}
 
-{% block body -%}
+{% block content -%}
     <h1>User</h1>
 
     <table class="record_properties">
@@ -37,21 +37,18 @@
                 <th>Adresse</th>
                 <td>{{ entity.adresse }}</td>
             </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ entity.password }}</td>
-            </tr>
+
         </tbody>
     </table>
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('user') }}">
+        <a href="{{ path('troiswa_back_User') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('user_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('troiswa_back_User_editer', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>

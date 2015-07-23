@@ -1,16 +1,16 @@
-trois_back_contact:
+troiswa_back_contact:
     path: /contact
     defaults: { _controller:TroiswaBackBundle:Statics:contact}
 
-trois_back_feedback:
+troiswa_back_feedback:
     path: /feedback
     defaults: { _controller:TroiswaBackBundle:Statics:feedback}
 
-trois_back_statics:
+troiswa_back_statics:
   path: /statics
   defaults: { _controller:TroiswaBackBundle:Statics:cgv}
 
-trois_back_equipes:
+troiswa_back_equipes:
   path: /equipes
   defaults:
     _controller: FrameworkBundle:Template:template

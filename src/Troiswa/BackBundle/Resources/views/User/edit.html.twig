@@ -1,16 +1,25 @@
 {% extends "TroiswaBackBundle::layout_admin.html.twig" %}
 
-{% block body -%}
+{% block content -%}
     <h1>User edit</h1>
 
     {{ form(edit_form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('user') }}">
+        <a href="{{ path('troiswa_back_User') }}">
             Back to the list
         </a>
     </li>
     <li>{{ form(delete_form) }}</li>
 </ul>
+
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+        <li><a href="#">Regular link</a> </li>
+        <li class="disabled"><a href="#">Disabled link</a></li>
+        <li><a href="#">Another link</a></li>
+    </ul>
+
+
 {% endblock %}

@@ -1,4 +1,4 @@
-trois_back_training:
+troiswa_back_training:
     path: /training/{chaine}
     defaults: { _controller:TroiswaBackBundle:Statics:training, chaine: "titi"}
     requirements:
@@ -6,10 +6,10 @@ trois_back_training:
      # chaine: "[a-z A-Z]+"
       chaine: "[a-z]{4}"
 
-trois_back_layout:
+troiswa_back_layout:
     path: /layout
     defaults: { _controller:TroiswaBackBundle:Statics:layout}
 
-trois_back_Otherlayout:
+troiswa_back_Otherlayout:
     path: /Otherlayout
     defaults: { _controller:TroiswaBackBundle:Statics:Otherlayout}

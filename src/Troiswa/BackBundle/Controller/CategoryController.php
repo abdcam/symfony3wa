@@ -98,7 +98,7 @@ class CategoryController extends Controller
 
             $this->get("session")->getFlashBag()->add("success","votre categorie été bien créée");
 
-            return $this->redirectToRoute("trois_back_Category");
+            return $this->redirectToRoute("troiswa_back_Category");
         }
         return $this->render("TroiswaBackBundle:Category:Category-add.html.twig",
             [
@@ -130,7 +130,7 @@ class CategoryController extends Controller
 
             $this->get("session")->getFlashBag()->add("success","votre catégorie a été bien mise à jour");
 
-            return $this->redirectToRoute("trois_back_Category");
+            return $this->redirectToRoute("troiswa_back_Category");
         }
         return $this->render("TroiswaBackBundle:Category:edite_category.html.twig",
             [
@@ -156,7 +156,7 @@ class CategoryController extends Controller
         $em->remove($category);
         $em->flush();
 
-        return $this->redirectToRoute('trois_back_Category');
+        return $this->redirectToRoute('troiswa_back_Category');
     }
 
     public function AllCategoriesAction()

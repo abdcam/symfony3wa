@@ -14,7 +14,7 @@ class GoodTelValidator extends ConstraintValidator
         // Si la valeur tapé par l'utilisateur est dans le tableau
         // Création d'une erreur
 
-        if ( preg_match("#\b("/\d/")\b#i",$value))
+        if (!preg_match("#^0[1-68]([-. ]?[0-9]{2}){4}$#",$value))
         {
             $constraint->max;
             $this->context->addViolation($constraint->message);

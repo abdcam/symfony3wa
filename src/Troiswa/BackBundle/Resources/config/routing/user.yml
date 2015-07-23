@@ -1,25 +1,36 @@
-trois_back_User:
+troiswa_back_User:
   path: /
-  defaults: { _controller:TroiswaBackBundle:User:User}
+  defaults: { _controller:TroiswaBackBundle:User:index}
 
-trois_back_User_info:
-  path: /information/{idprod}
-  defaults: { _controller:TroiswaBackBundle:User:User_info}
+troiswa_back_User_info:
+  path: /information/{id}
+  defaults: { _controller:TroiswaBackBundle:User:show}
   requirements:
     idCat: \d+
 
-trois_back_User:
+troiswa_back_User_add:
     path: /add
-    defaults: { _controller:TroiswaBackBundle:User:adduser}
+    defaults: { _controller:TroiswaBackBundle:User:new}
 
-trois_back_User_editer:
-    path: /editer/{idprod}
-    defaults: { _controller:TroiswaBackBundle:User:edite }
+troiswa_back_User_create:
+    path: /create
+    defaults: { _controller:TroiswaBackBundle:User:create}
+    methods: POST
+
+troiswa_back_User_editer:
+    path: /editer/{id}
+    defaults: { _controller:TroiswaBackBundle:User:edit }
     requirements:
         idCat: \d+
 
-trois_back_User_supprimer:
-    path: /supprimer/{idprod}
-    defaults: { _controller:TroiswaBackBundle:User:supp }
+troiswa_back_user_update:
+    path:     /{id}/update
+    defaults: { _controller: "TroiswaBackBundle:User:update" }
+    methods:  [POST, PUT]
+
+troiswa_back_User_supprimer:
+    path: /supprimer/{id}
+    defaults: { _controller:TroiswaBackBundle:User:delete }
     requirements:
         idCat: \d+
+

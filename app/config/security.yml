@@ -8,8 +8,9 @@ security:
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
-        ROLE_ADMIN: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_USER: [ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN: [ROLE_COMMERCIAL, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_COMMERCIAL: [ROLE_CLIENT]
+        ROLE_CLIENT: [ROLE_USER]
 
     providers:
       in_memory:
@@ -45,8 +46,14 @@ security:
         form_login:
             check_path: troiswa_back_login_check
             login_path: troiswa_back_login
-            default_target_path: trois_back_administration
+            csrf_provider: security.csrf.token_manager
+            default_target_path: troiswa_back_administration
             always_use_default_target_path: true
+        remember_me:
+            key: "%secret%"
+            lifetime: 172800 # 2 jours
+            path: / # accessible sur toutes les urls
+            domain: ~ #valeur par défaut : accessible partout sur mon site
         logout:
             path: troiswa_back_logout
             target: /admin/login
@@ -55,8 +62,10 @@ security:
         provider: provider_back
 
        # switch_user: { role: ROLE_ADMIN, parameter: _want_to_be_this_user }
-        switch_user: { role: ROLE_USER }
+        switch_user: { role: ROLE_ADMIN }
 
-    #access_control:
-      #- { path: ^/admin/product, role: ROLE_ADMIN } #ici acces autorise ke l'admin pas pour les user
-     # - { path: ^/admin, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    access_control:
+        # seul l'administrateur à accès aux pages produit
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, role: ROLE_CLIENT }
+

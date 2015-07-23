@@ -5,6 +5,7 @@ namespace Troiswa\BackBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class UserType extends AbstractType
 {
@@ -33,8 +34,9 @@ class UserType extends AbstractType
                 'first_options'  => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Mot de passe (validation)'),
         ))
-            ->add('_remember_me', 'checkbox')
+            //->add('_remember_me', 'checkbox')
             ->add('submit', 'submit'); // new!;
+
         ;
     }
     

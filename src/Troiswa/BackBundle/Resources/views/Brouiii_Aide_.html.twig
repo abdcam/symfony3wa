@@ -330,3 +330,118 @@ Resultat: Pour avoir comme çà: php app/console troiswa:user:create toto bidul
 voir la solution dans app/src/Troiswa/BackBundle/Command/Fichier:TroiswaCreationUserCommand.php
 
 
+
+DDDDDDDDDDDDDDDDDd   23/07/15  DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+Exo:
+
+// - Dans le formulaire d'édition, faire en sorte de pouvoir changer les droits
+// - Attention : créer un UserEditType en enlevant la possibilité de modifier le mot de passe
+
+
+// - Restriction sur les méthodes :
+// - visualiser, supprimer, editier et créer : super admin
+// - visualiser, editer et créer : admin
+// - visualiser, créer : commercial
+// - visualiser : client
+
+
+// soit dans le controller
+if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+throw new AccessDeniedException("Vous n'avez pas les droits pour accéder à cette page");
+}
+
+// soit annoation
+// Ne pas oublier le use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+// @Security("has_role('ROLE_ADMIN')")
+ refference pour la resolution:
+// soit dans le controller
+if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+throw new AccessDeniedException("Vous n'avez pas les droits pour accéder à cette page");
+}
+
+// soit annoation
+// Ne pas oublier le use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+// @Security("has_role('ROLE_ADMIN')")
+
+Une partie de solution:
+
+// soit dans le controller
+if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+throw new AccessDeniedException("Vous n'avez pas les droits pour accéder à cette page");
+}
+
+ou en methode anotation
+
+/**
+* Deletes a User entity.
+* Permet de bloquer cette action. Seul les super admin peuvent y accéder
+* @Security("has_role('ROLE_SUPER_ADMIN')")
+*/
+public function deleteAction(Request $request, $id)
+{
+$form = $this->createDeleteForm($id);
+$form->handleRequest($request);
+
+if ($form->isValid()) {
+$em = $this->getDoctrine()->getManager();
+$entity = $em->getRepository('TroiswaBackBundle:User')->find($id);
+
+if (!$entity) {
+throw $this->createNotFoundException('Unable to find User entity.');
+}
+
+$em->remove($entity);
+$em->flush();
+}
+
+return $this->redirect($this->generateUrl('troiswa_back_user'));
+}
+
+/**
+* Creates a new User entity.
+* @Security("has_role('ROLE_COMMERCIAL')")
+*/
+public function createAction(Request $request)
+{
+//..... code
+}
+
+
+GGGGGGGGGGG
+
+Theme squelette
+http://startbootstrap.com/template-categories/ecommerce/
+
+Theme payant et gratuit
+https://www.freshdesignweb.com/free-ecommerce-website-templates/
+
+Theme gratuit
+http://designscrazed.org/best-html-ecommerce-website-templates/
+
+Exo:
+Afficher la page d'accueil sur l'url /
+ATTENTION : créer un assetsfront afin de stocker le css, les fonts, le js et les images
+Consignes :
+- Slider : Les 3 derniers produits au niveau de la date de création
+dont la quantité est supérieur à 0 et dont les produits ont une image
+- rendrer les bulles dynamique si l'on souhaite un jour afficher 4 produits
+
+- Afficher les 5 produits ayant le plus de tag
+
+- afficher dans la sidebar, les catégories. Attention, visible sur toutes les pages
+Utilisation de render ;)
+Il faut afficher les catégories par ordre de position.
+
+- Afficher la page d'un produit. J'aimerai également afficher les tags du produits sur
+cette page
+
+- Afficher la page d'une catégorie. Celle-ci affiche la description de la catégorie
+ainsi que tous les produits avec une pagination bien sûr ^^
+Afficher les produits par ordre alphabétique
+
+- Créer une entité Comment. Un produit peut avoir plusieurs commentaires mais un commentaire
+appartient à un seul produit
+L'entité Comment à : auteur, contenu, note (de 1 à 5) et une date de création
+
+
+

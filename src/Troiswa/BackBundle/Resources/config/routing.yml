@@ -2,7 +2,7 @@ troiswa_back_user:
     resource: "@TroiswaBackBundle/Resources/config/routing/user.yml"
     prefix:   /user
 
-trois_back_administration:
+troiswa_back_administration:
   path: /
   defaults: { _controller:TroiswaBackBundle:Main:index}
 
