@@ -1,3 +1,8 @@
+
+Projet:TroiswaBackBundle:
+Id:cranouha@yahoo.fr
+MDP:devdevnouha
+
 les codeShare:
 bdd:
 http://symfony.com/fr/doc/current/cookbook/doctrine/multiple_entity_managers.html
@@ -419,14 +424,26 @@ Theme gratuit
 http://designscrazed.org/best-html-ecommerce-website-templates/
 
 Exo:
+Theme squelette
+http://startbootstrap.com/template-categories/ecommerce/
+
+Theme payant et gratuit
+https://www.freshdesignweb.com/free-ecommerce-website-templates/
+
+Theme gratuit
+http://designscrazed.org/best-html-ecommerce-website-templates/
+
+
+Exo:
 Afficher la page d'accueil sur l'url /
 ATTENTION : créer un assetsfront afin de stocker le css, les fonts, le js et les images
 Consignes :
 - Slider : Les 3 derniers produits au niveau de la date de création
 dont la quantité est supérieur à 0 et dont les produits ont une image
-- rendrer les bulles dynamique si l'on souhaite un jour afficher 4 produits
+et sont actif
+- rendre les bulles dynamiques si l'on souhaite un jour afficher 4 produits
 
-- Afficher les 5 produits ayant le plus de tag
+- Afficher les 5 produits ayant le plus de tag et actif
 
 - afficher dans la sidebar, les catégories. Attention, visible sur toutes les pages
 Utilisation de render ;)
@@ -438,10 +455,69 @@ cette page
 - Afficher la page d'une catégorie. Celle-ci affiche la description de la catégorie
 ainsi que tous les produits avec une pagination bien sûr ^^
 Afficher les produits par ordre alphabétique
+UTILISER : http://startbootstrap.com/template-overviews/heroic-features/
 
 - Créer une entité Comment. Un produit peut avoir plusieurs commentaires mais un commentaire
 appartient à un seul produit
 L'entité Comment à : auteur, contenu, note (de 1 à 5) et une date de création
 
+24/07/15
 
+ROUTING
+
+troiswa_front_cart_add:
+path: /cart/add/{id}
+defaults: { _controller:.........:addCart }
+requirements:
+id: \d+
+
+
+troiswa_front_cart:
+path: /cart
+defaults: { _controller:.........:cart }
+
+
+CONTROLLER
+
+public function addCartAction(Product $product, Request $request)
+{
+// Récupération des informations du formulaire d'ajout au panier
+$qty = $request->request->getInt('qty');
+
+if ($qty > 0)
+{
+$cart = ['id_product' => $product->getId(), 'quantity' => $qty];
+$session = $request->getSession();
+$session->set('cart', json_encode($cart));
+
+}
+
+return $this->redirectToRoute('troiswa_front_cart');
+
+}
+
+public function cartAction(Request $request)
+{
+$session = $request->getSession();
+
+// création d'un tableau vide qui contiendra tous les id_product
+// On parcour $cart
+// On ajoute l'id_product au tableau précédemment créé
+
+// Si le tableau précédemment crée n'est pas vide
+// Utilisation de implode : http://php.net/manual/fr/function.implode.php
+// Implode permet de transformer un tableau en chaîne de caractère
+// Requête sql
+
+//dump($cart);
+
+dump($session->get('cart'));
+dump(json_decode($session->get('cart')));
+die;
+}
+
+http://bootsnipp.com/snippets/featured/responsive-shopping-cart
+
+mieu de prendre celui là
+http://bootsnipp.com/snippets/featured/shopping-cart-bs-3
 

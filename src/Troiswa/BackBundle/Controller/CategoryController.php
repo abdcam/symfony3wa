@@ -165,7 +165,7 @@ class CategoryController extends Controller
         $category = $em-> getRepository("TroiswaBackBundle:Category")
             ->findAll();
 
-        return $this->render("TroiswaBackBundle:Category:renderCategorie.html.twig",["category"=>$category]);
+        return $this->render("TroiswaBackBundle:Category:Categorie.html.twig",["category"=>$category]);
     }
 
 }
