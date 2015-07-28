@@ -6,11 +6,23 @@ security:
           algorithm: bcrypt
           cost: 13
 
+
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+
+
+
+
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
         ROLE_ADMIN: [ROLE_COMMERCIAL, ROLE_ALLOWED_TO_SWITCH]
         ROLE_COMMERCIAL: [ROLE_CLIENT]
         ROLE_CLIENT: [ROLE_USER]
+
+
+
+
+
 
     providers:
       in_memory:
@@ -21,16 +33,43 @@ security:
               roles: ROLE_ADMIN
             toto: { password: bidule,roles: ROLE_USER} #utilisateur toto avec le mot de passe bidule
 
+
       provider_back:
           #entity : { class: TroiswaBackBundle:User, property: pseudo }
           #entity: { class: TroiswaBackBundle:User, property: email }
           # Visualiser la méthode loadUserByUsername dans UserRepository pour mieux comprendre
           entity: { class: TroiswaBackBundle:User }
 
+
+      fos_userbundle:
+          id: fos_user.user_provider.username
+
+
+
+
+
+
     firewalls:
       dev:
         pattern: ^/(_(profiler|wdt|error)|css|images|js)/
         security: false
+
+      front_login:
+        pattern: ^/login$
+        anonymous: true
+
+
+      main:
+        pattern: ^/
+        form_login:
+          provider: fos_userbundle
+          csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+
+        logout:       true
+        anonymous:    false
+
+
+
 
       login_firewall:
         pattern: ^/admin/login$
@@ -64,7 +103,16 @@ security:
        # switch_user: { role: ROLE_ADMIN, parameter: _want_to_be_this_user }
         switch_user: { role: ROLE_ADMIN }
 
+
+
+
+
     access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+
         # seul l'administrateur à accès aux pages produit
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_CLIENT }

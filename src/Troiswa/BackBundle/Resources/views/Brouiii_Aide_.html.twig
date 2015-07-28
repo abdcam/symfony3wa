@@ -521,3 +521,249 @@ http://bootsnipp.com/snippets/featured/responsive-shopping-cart
 mieu de prendre celui là
 http://bootsnipp.com/snippets/featured/shopping-cart-bs-3
 
+//DDDDDDDD Lundi 27/07/15  RRRRRRRRRRRRRRRRR
+
+Mettre en place un serivce:
+https://user.oc-static.com/files/420001_421000/420451.png
+
+
+$em = $this->getDoctrine()->getManager();
+$em2 = $this->get('doctrine')->getManager();
+dump($em);
+dump($em2);
+die;
+
+
+
+Controller/
+
+Entity/
+
+Util/
+/Utility.php
+/Cart.php
+
+
+Liste de tous les services
+php ap/console container:debug
+
+
+<?php
+
+function getLittleDescription($texte, $nbchar = 50)
+{
+	return (strlen($texte) > $nbchar ? substr(substr($texte,0,$nbchar),0,strrpos(substr($texte,0,$nbchar)," "))."..." : $texte);
+}
+
+namespace Troiswa\FrontBundle\Util;
+
+
+use Symfony\Component\HttpFoundation\Session\Session;
+
+class Cart
+{
+
+private $session;
+
+public function __construct(Session $serviceSession)
+{
+$this->session = $serviceSession;
+}
+
+public function add($idProduct, $qty = 1)
+{
+if ($qty > 0)
+{
+//$session = $request->getSession();
+
+
+
+if ($this->session->get('cart'))
+{
+$cart = json_decode($this->session->get('cart'), true);
+}
+else
+{
+$cart = [];
+}
+
+
+
+if (array_key_exists($idProduct, $cart))
+{
+$qty += $cart[$idProduct]['quantity'];
+}
+
+
+
+$cart[$idProduct] = ['quantity' => $qty];
+
+$this->session->set('cart', json_encode($cart));
+
+}
+}
+
+}
+
+public function addCartAction(Product $product, Request $request)
+{
+
+$qty = $request->request->getInt('qty');
+
+$cartService = $this->get('troiswa_front.cart');
+
+$cartService->add($product->getId(), $qty);
+
+
+
+return $this->redirectToRoute('troiswa_front_cart');
+}
+
+
+public function cartAction()
+{
+
+// code de la récupération des produits
+
+
+return $this->render('TroiswaFrontBundle:Cart:index.html.twig');
+}
+
+
+services:
+
+#    troiswa_back.example:
+#        class: Troiswa\BackBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+
+troiswa_back.monsuperservice:
+class: Troiswa\BackBundle\Util\Utility
+
+
+troiswa_front.cart:
+class: Troiswa\FrontBundle\Util\Cart
+arguements: ["@session"]
+
+voir: https://user.oc-static.com/files/420001_421000/420451.png
+
+
+SSSSSSSSSSSSSSSSSSSSSSSSSSS Mardi 280715 BBBBBBBBBBBBBBBBBB
+
+Fichier twig
+------------
+{% block content %}
+    <table class="table table-hover" id="detailCart">
+        <tr class="item-product">
+            <td class="col-sm-8 col-md-6">
+                <div class="media">
+                    <a class="thumbnail pull-left" href="{{ path('troiswa_back_product_show', {idprod:product.id}) }}"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="{{ path('troiswa_back_product_show', {idprod:product.id}) }}">{{ product.title }}</a></h4>
+                        <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                        <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                    </div>
+                </div></td>
+            <td class="col-sm-1 col-md-1" style="text-align: center">
+                <input type="email" class="form-control" id="exampleInputEmail1" value="{{ cart[product.id].quantity }}">
+            </td>
+            <td class="col-sm-1 col-md-1 text-center"><strong>{{ product.price }}</strong></td>
+            <td class="col-sm-1 col-md-1 text-center"><strong>{{ product.price * cart[product.id].quantity }}</strong></td>
+            <td class="col-sm-1 col-md-1">
+                <a href="{{ path('troiswa_back_cart_delete', {id : product.id}) }}" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove"></span> Remove
+                </a></td>
+        </tr>
+    </table>
+{% endblock %}
+Fin fichier twig
+------------
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('assets/assetfront/js/cart.js') }}"></script>
+{% endblock %}
+
+
+- mettre à jour le total
+- Faire incrémentation et décrémentation
+- Si vous supprimez le dernier produit, il faut supprimer tout le panier et afficher le message
+"Votre panier est vide"
+- Faire incrémentation et décrémentation en ajax
+
+cart.js
+-------
+$(document).ready(function(){
+//console.log('chargement du fichier');
+
+$('#detailCart').on('click', '.btn-danger', function(event){
+event.preventDefault();
+console.log(this);
+
+var $product = $(this).closest('.item-product');
+
+$.ajax({
+url: $(this).attr('href'),
+dataType: 'json'
+}).done(function(data, textStatus){
+console.log(data);
+console.log(textStatus);
+
+$product.fadeOut(700, function(){
+// Animation terminé
+$(this).remove();
+});
+
+});
+
+});
+
+
+});
+Fin cart.js
+------------
+
+
+
+
+CartController.php
+-------
+
+class CartController extends Controller
+{
+
+public function removeAction(Product $product, Request $request)
+{
+// Code de la suppression du produit
+$session = $request->getSession();
+$cart = json_decode($session->get('cart'), true);
+
+if ($cart && array_key_exists($product->getId(), $cart))
+{
+unset($cart[$product->getId()]);
+$session->set('cart', json_encode($cart));
+}
+
+
+// Si je suis en ajax
+if ($request->isXmlHttpRequest())
+{
+return new JsonResponse("Votre produit a bien été supprimé");
+}
+
+// redirection sur la page panier
+return $this->redirectToRoute('troiswa_front_cart');
+}
+
+}
+
+Fin CartController.php
+-------
+
+
+
+
+

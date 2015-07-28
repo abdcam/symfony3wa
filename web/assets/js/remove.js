@@ -2,12 +2,13 @@
 
 $(document).ready(function()
 {
-    $(".table").on(" click", "btn-danger", function(event)
+    $(".table").on(" click", ".btn-danger", function(event)
         {
             var stop_href=confirm("Etes-vous sûr de supprimer ? ");
             if(stop_href==false)
             {
                 event.preventDefault();
+                event.stopImmediatePropagation();
             }
         }
     )

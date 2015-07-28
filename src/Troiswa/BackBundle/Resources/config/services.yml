@@ -2,3 +2,14 @@ services:
 #    troiswa_back.example:
 #        class: Troiswa\BackBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    troiswa_back.monsuperservice:
+        class: Troiswa\BackBundle\Util\Utility
+
+    troiswa_front.cart:
+        class: Troiswa\BackBundle\Util\Cart
+        arguments: ["@session"]
+
+    troiswa_front.supp:
+        class: Troiswa\BackBundle\Util\Cart
+        arguments: ["@session"]

@@ -7,6 +7,8 @@ troiswa_front_homepage:
 troiswa_front_product:
     path:     /produit/{id}
     defaults: { _controller: TroiswaFrontBundle:ProductFront:produit }
+    requirements:
+          id: \d+
 
 troiswa_front_cart_add:
     path: /cart/add/{id}
@@ -17,3 +19,24 @@ troiswa_front_cart_add:
 troiswa_front_cart:
     path: /cart
     defaults: { _controller:TroiswaFrontBundle:ProductFront:cart }
+
+troiswa_front_supp:
+    path: /cart/supp/{id}
+    defaults: { _controller:TroiswaFrontBundle:ProductFront:supp }
+    requirements:
+      id: \d+
+
+troiswa_front_cart_plus:
+    path: /cart/plus/{id}
+    defaults: { _controller:TroiswaFrontBundle:ProductFront:plus }
+    requirements:
+      id: \d+
+
+troiswa_front_cart_moins:
+    path: /cart/moins/{id}
+    defaults: { _controller:TroiswaFrontBundle:ProductFront:moins }
+    requirements:
+      id: \d+
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

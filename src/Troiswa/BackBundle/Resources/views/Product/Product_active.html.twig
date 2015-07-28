@@ -17,7 +17,7 @@
 
 {% block content %}
 
-    <a href="{{ path("trois_back_product_add") }} " class="btn btn-primary">Ajouter un produit</a>
+    <a href="{{ path("troiswa_back_product_add") }} " class="btn btn-primary">Ajouter un produit</a>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
@@ -39,12 +39,12 @@
                         <td>{{  unproduct.title}}</td>
                         <td>{{ unproduct.prix}}</td>
                         <td>
-                            <a href="{{ path('trois_back_Product_info', {idprod : unproduct.id} ) }}" class="btn btn-info">voir</a>
-                            <a href="{{ path('trois_back_product_editer',{idprod : unproduct.id}) }}" class="btn btn-success">Edite/Modif</a>
+                            <a href="{{ path('troiswa_back_Product_info', {idprod : unproduct.id} ) }}" class="btn btn-info">voir</a>
+                            <a href="{{ path('troiswa_back_product_editer',{idprod : unproduct.id}) }}" class="btn btn-success">Edite/Modif</a>
 
-                           <!-- <a href="{{ path("trois_back_product_supprimer", {idprod: unproduct.id} ) }}" class="btn btn-danger" onclick="return confirm('Etes-vous sûr de supprimer le produit?')">supprimer</a> -->
+                           <!-- <a href="{{ path("troiswa_back_product_supprimer", {idprod: unproduct.id} ) }}" class="btn btn-danger" onclick="return confirm('Etes-vous sûr de supprimer le produit?')">supprimer</a> -->
 
-                            <a href="{{ path("trois_back_product_supprimer", {idprod: unproduct.id} ) }}" class="btn btn-danger">supprimer</a>
+                            <a href="{{ path("troiswa_back_product_supprimer", {idprod: unproduct.id} ) }}" class="btn btn-danger">supprimer</a>
 
                         </td>
                     </tr>
@@ -65,7 +65,7 @@
 
             <li>{{ unProduct.title|default('Titre par défaut') }}</li>
             <li>{{ unProduct.description}}</li>
-            <li><a href="{{ path("trois_back_Product_info", { idprod: unProduct.id } ) }}"> Page product info</a></li>
+            <li><a href="{{ path("troiswa_back_Product_info", { idprod: unProduct.id } ) }}"> Page product info</a></li>
         </ul>
         {% endfor %}
 

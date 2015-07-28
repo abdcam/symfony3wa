@@ -109,5 +109,21 @@ class ProductRepository extends EntityRepository
                        LEFT JOIN prod.categ cat");
         return $query->getResult();
     }
+
+    // faire la requête suivante :
+    // SELECT * FROM product WHERE id IN (:value)   Envoyer dans :value le tableau $idProd
+    // Cela correspondrait à faire SELECT * FROM product WHERE id IN (12,5,4)
+
+    public function getProductInCart($idsProd)
+    {
+        $query=$this->getEntityManager()->createQuery("
+            SELECT prod FROM TroiswaBackBundle:Product prod
+        WHERE prod.id IN (:listId)")
+        ->setParameter("listId",$idsProd);
+        //dump($query->getResult());
+        //die;
+
+        return $query->getResult();
+    }
 }
 

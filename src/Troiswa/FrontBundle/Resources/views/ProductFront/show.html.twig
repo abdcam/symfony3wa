@@ -25,8 +25,9 @@
 
     <form method="POST" action="{{ path('troiswa_front_cart_add', {id:product.id}) }}">
         <label>Quantité</label>
-        <input type="number" name="qty">
+        <input type="number" name="qty" value="1">
         <button>Ajouter au panier</button>
+        <button>Rerour liste produit</button>
     </form>
     <a href= "{{ path('troiswa_front_cart', {id:product.id}) }}">Voir le panier</a>
     <div class="well">
