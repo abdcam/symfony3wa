@@ -763,6 +763,76 @@ return $this->redirectToRoute('troiswa_front_cart');
 Fin CartController.php
 -------
 
+QQQQQQQQQQQQQQQQQQQQQQQQQQ  Merc29/07/15  QQQQQQQQQQQQQQQQQQQQQQQQQqqq
+exo:
+Créer une entité Comment. Un produit peut avoir plusieurs commentaires mais un commentaire
+appartient à un seul produit
+L entité Comment à : client, contenu, note (de 1 à 5), date de création, produit
+Liaison avec un produit comme expliqué ci-dessus
+Liaison avec un client : Un client peut poster plusieurs commentaires et un commentaire
+appartient à un seul client.
+
+
+
+1) afficher dans la sidebar, les catégories. Attention, visible sur toutes les pages
+Utilisation de render ;)AppBundle\Entity\User
+Il faut afficher les catégories par ordre de position.
+
+2) Afficher la page d un produit. J aimerai également afficher les tags du produits sur
+cette page
+
+3) Afficher la page panier. Celle-ci liste tous les produits, leur quantité, le prix
+unitaire, le prix * la quantité et le total des prix
+http://bootsnipp.com/snippets/featured/shopping-cart-bs-3
+Afin de faire le total du prix des produits, il faut utiliser ceci :
+http://twig.sensiolabs.org/doc/tags/set.html
+
+4) Afficher la page d une catégorie. Celle-ci affiche la description de la catégorie
+ainsi que tous les produits avec une pagination bien sûr ^^
+Afficher les produits par ordre alphabétique
+UTILISER : http://startbootstrap.com/template-overviews/heroic-features/
+
+5) Ajouter la possibilité de supprimer un produit du panier
+
+6) Ajouter la possibilité de modifier la quantité du produit : ajouter ou enlever
+Pour cela, il faut créer deux <a href></a> permettant de récupérer le produit
+Attention : lorsque on enlève de la quantité et que celle-ci arrive à 0, il faut supprimer
+le produit
+
+7) Ajouter des messages afin de prévenir le client de la suppresion du produit
+
+8) Afficher le nombre de produit
+
+9) Mettre en place le service avec la possibilité d ajouter au panier et de supprimer
+
+Créer une méthode getProducts() permettant de retourner tous les produits dans le panier
+Vous aurez besoin de faire une requête. Il faut donc injecter ce service en plus
+"@doctrine.orm.entity_manager"
+
+N oubliez pas de le récupérer dans le __construct afin de pouvoir l utiliser dans
+la méthode getProducts()
+
+10) Ajouter un bouton permettant de supprimer tout le panier.
+
+11) Super bonus: ajouter un champ permettant au client de profiter de ses coupons
+Si un client utilise un coupon, vérifier que le coupon lui appartient
+Ajouter dans la session une information permettant de se souvenir de ce coupon
+Afficher les informations du coupon dans la panier
+Appliquer la réduction sur le total.
+Ex: Utilisation du coupon -5€ sur un total de 15€. Il faut afficher 15€ rayé et le nouveau
+total : 10€
+Aide : Utiliser  "text-decoration : line-through;" en css afin de rayé du texte
+
+12) Faire la suppression en ajax
+
+13) Bonus: Faire incrémentation et décrémentation en ajax
+
+14) Créer une entité Comment. Un produit peut avoir plusieurs commentaires mais un commentaire
+appartient à un seul produit
+L entité Comment à : auteur, contenu, note (de 1 à 5) et une date de création
+
+
+
 
 
 

@@ -40,3 +40,7 @@ troiswa_front_cart_moins:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+troiswa_front_comment_Add:
+    path: produit/comment
+    defaults: { _controller:TroiswaFrontBundle:ProductFront:AddComment }

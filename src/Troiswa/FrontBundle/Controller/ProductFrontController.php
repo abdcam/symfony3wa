@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Troiswa\BackBundle\Entity\Product;
 use Troiswa\BackBundle\Util\Utility;
+use Troiswa\FrontBundle\Entity\Comment;
+use Troiswa\FrontBundle\Form\CommentType;
 
 class ProductFrontController extends Controller
 {
@@ -28,10 +30,49 @@ class ProductFrontController extends Controller
         return $this->render("TroiswaFrontBundle:ProductFront:ProductFront.html.twig", ["Product" => $product, "productSlider" => $productSlider]);
     }
 
-    public function produitAction(Product $product)
-    {
+    public function produitAction(Product $product, Request $request)
+    { //pour créer le formulaire automtqm dans le fichier show.html.twig
+        $comment = new Comment();
+        $em = $this->getDoctrine()->getManager();
+    //la requette pour recuperer le commentaire dans la base de donnée
+        $commentaires = $em->getRepository('TroiswaFrontBundle:Comment')->findBy(['produit' => $product]);
 
-        return $this->render("TroiswaFrontBundle:ProductFront:show.html.twig", ["product" => $product]);
+        //dump($commentaires);
+        //die;
+        $comment->setProduit($product);
+
+        $formComment = $this->createForm(new CommentType(), $comment, [
+            'attr' => [
+                'novalidate' => 'novalidate'
+            ] //attr et novalidate pour eviter le message forcé de html5
+        ])
+            ->add('submit', 'submit', [
+                'label' => 'Enregistrer'
+            ]);
+        //pour enregistrer dans la base de donnée
+        $formComment->handleRequest($request);
+
+        if ($formComment->isValid())
+        {
+                //pour verifier la connection du client si non connecter pas possible
+            $comment->setClient($this->getUser());
+            $comment->setProduit($product);
+
+            $em->persist($comment);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Le commentaire est enregistré');
+
+            return $this->redirectToRoute('troiswa_front_product', [
+                'id' => $product->getId()
+            ]);
+        }
+
+        return $this->render("TroiswaFrontBundle:ProductFront:show.html.twig", [
+            "product" => $product,
+            "form_comment" => $formComment->createView(),
+            'AfficheCommentaires' => $commentaires
+        ]);
     }
     //On a mis tout en commentaire parce qu'on a crée un service qui remplace tout ce code Aller voir BackBundle/Util/Cart.php et config/services.yml avantage notre controller est alléger
     /*
@@ -272,4 +313,50 @@ class ProductFrontController extends Controller
 
         return $this->redirectToRoute('troiswa_front_cart');
     }
+    //GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+/*
+    public function AddCommentAction(Request $request)
+    {
+        $Comment = new Comment();
+
+        $formComment = $this->createForm(new CommentType(), $Comment)
+            ->add("button", "submit");
+
+        $formComment->handleRequest($request);
+
+        if ($formComment->isValid()) {
+            dump($$formComment);
+            die('error');
+
+            return $this->render("TroiswaFrontBundle:ProductFrontBundle:AjouterComment.html.twig",["formComment" => $formComment->createView()
+            ]);
+        }
+    }
+*/
+
+
+            /*
+            $em = $this->getDoctrine()->getManager();
+
+            // rajoute du persist de logo
+
+            $em->persist($Logo);
+            $em->persist($Brand);
+            //$product->setTitle("Modification après persist");
+            $em->flush();
+
+            $this->get("session")->getFlashBag()->add("success", "votre Marque a été bien créée");
+
+            return $this->redirectToRoute("trois_back_Category");
+        }
+        return $this->render("TroiswaBackBundle:Product:AjouterBrand.html.twig",
+            [
+                "formBrand" => $formBrand->createView()
+            ]
+        );
+    }
+
+*/
+
+
 }

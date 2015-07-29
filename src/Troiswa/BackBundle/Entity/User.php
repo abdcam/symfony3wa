@@ -54,6 +54,13 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
+     * @ORM\Column(name="sexe", type="boolean")
+     */
+    private $sexe;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
@@ -465,5 +472,28 @@ class User implements UserInterface, \Serializable
     public function removeRole(\Troiswa\BackBundle\Entity\Role $roles)
     {
         $this->roles->removeElement($roles);
+    }
+
+    /**
+     * Set sexe
+     *
+     * @param boolean $sexe
+     * @return User
+     */
+    public function setSexe($sexe)
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * Get sexe
+     *
+     * @return boolean 
+     */
+    public function getSexe()
+    {
+        return $this->sexe;
     }
 }

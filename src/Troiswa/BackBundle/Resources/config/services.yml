@@ -13,3 +13,14 @@ services:
     troiswa_front.supp:
         class: Troiswa\BackBundle\Util\Cart
         arguments: ["@session"]
+
+    troiswa_front.twig.twig_extentions:
+        class: Troiswa\FrontBundle\Twig\Extention
+        tags:
+            - { name: twig.extension }
+
+    troiswa_front.maintenance:
+        class: Troiswa\FrontBundle\Listener\MaintenanceListener
+        arguments: ["%ismaintenance%","@twig"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onMaintenance }

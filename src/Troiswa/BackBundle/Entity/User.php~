@@ -16,8 +16,18 @@ use Troiswa\BackBundle\Validator\GoodTel;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Troiswa\BackBundle\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
+    public function serialize()
+    {
+        return serialize([$this->id]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list ($this->id) = unserialize($serialized);
+    }
+
     /**
      * @var integer
      *
@@ -40,6 +50,13 @@ class User implements UserInterface
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sexe", type="boolean")
+     */
+    private $sexe;
 
     /**
      * @var string

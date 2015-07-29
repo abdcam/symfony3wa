@@ -17,7 +17,7 @@ class TagType extends AbstractType
         $builder
             ->add('word',"text");
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

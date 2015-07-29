@@ -49,7 +49,7 @@
                     <td> &nbsp; </td>
                     <td> &nbsp; </td>
                     <td><h3>Total</h3></td>
-                    <td class="text-right"><h3><strong id="total"> {{ totalProductPrice }}</strong></h3></td>
+                    <td class="text-right"><h3><strong id="total"> {{ totalProductPrice |price }}</strong></h3></td>
                 </tr>
                 <tr>
                     <td> &nbsp; </td>
@@ -67,6 +67,11 @@
             </table>
         </div>
     </div>
+
+    <div class="text-left">
+        <a href= "{{ path('troiswa_front_homepage') }}" class="btn btn-success" >Voir liste produit</a>
+    </div>
+
 {% endblock %}
 
 {% block javascripts %}
